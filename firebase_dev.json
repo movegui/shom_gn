@@ -1,0 +1,86 @@
+{
+  "emulators": {
+    "auth": {
+      "port": 8099
+    },
+    "firestore": {
+      "port": 7080
+    },
+    "hosting": {
+      "port": 4000
+    },
+    "pubsub": {
+      "port": 6085,
+      "host": "localhost"
+    },
+    "storage": {
+      "port": 8199
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true,
+    "database": {
+      "port": 8000
+    },
+    "functions": {
+      "port": 4001
+    },
+    "eventarc": {
+      "port": 8299
+    },
+    "tasks": {
+      "port": 8499
+    }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "firestore": {
+    "database": "(default)",
+    "location": "nam5",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "remoteconfig": {
+    "template": "remoteconfig.template.json"
+  },
+  "extensions": {},
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
+  "auth": {
+    "providers": {}
+  }
+}

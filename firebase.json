@@ -1,0 +1,80 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "shom-gn",
+                    "appId": "1:349872482331:android:96a41b854867d54cedf0be",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "shom-gn",
+                    "configurations": {
+                        "android": "1:349872482331:android:96a41b854867d54cedf0be",
+                        "ios": "1:349872482331:ios:98a08ebf893539e3edf0be",
+                        "macos": "1:349872482331:ios:98a08ebf893539e3edf0be",
+                        "web": "1:349872482331:web:1e03fda9af0aa5e8edf0be",
+                        "windows": "1:349872482331:web:301add7ef68dc794edf0be"
+                    }
+                }
+            }
+        }
+    },
+    "emulators": {
+        "auth": {
+            "port": 9099
+        },
+        "functions": {
+            "port": 5001
+        },
+        "firestore": {
+            "port": 8080
+        },
+        "ui": {
+            "enabled": true
+        },
+        "singleProjectMode": true,
+        "storage": {
+            "port": 9199
+        }
+    },
+    "firestore": {
+        "database": "(default)",
+        "location": "eur3",
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
+    },
+    "hosting": {
+        "public": "build/web",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ]
+    },
+    "storage": {
+        "rules": "storage.rules"
+    },
+    "functions": [
+        {
+            "source": "functions",
+            "codebase": "default",
+            "disallowLegacyRuntimeConfig": true,
+            "ignore": [
+                "node_modules",
+                ".git",
+                "firebase-debug.log",
+                "firebase-debug.*.log",
+                "*.local"
+            ]
+        }
+    ]
+}

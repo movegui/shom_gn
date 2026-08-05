@@ -1,0 +1,231 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shom_gn/consts/route_contants.dart';
+import 'package:shom_gn/l10n/app_localizations.dart';
+import 'package:shom_gn/providers/auth_provider.dart';
+import 'package:shom_gn/providers/providers.dart';
+import 'package:shom_gn/responsive.dart';
+import 'package:shom_gn/screens/auth/forgot_password_screen.dart';
+import 'package:shom_gn/screens/auth/login_screen.dart';
+import 'package:shom_gn/screens/auth/register_screen.dart';
+import 'package:shom_gn/screens/home_screen.dart';
+import 'package:shom_gn/screens/movegui_profile_screen.dart';
+import 'package:shom_gn/screens/profile/account_screen.dart';
+import 'package:shom_gn/widgets/app/app_footer.dart';
+import 'package:shom_gn/widgets/app/app_footer_web.dart';
+import 'package:shom_gn/widgets/app/my_appbar.dart';
+import 'package:shom_gn/widgets/menu/my_menu.dart';
+import 'package:shom_gn/widgets/web/menu_bar_web.dart';
+
+class AppRouter {
+  static const double iconSize = 18.0;
+  static final routerProvider = Provider<GoRouter>((ref) {
+    final authAsync = ref.watch(authStateProvider);
+
+    return GoRouter(
+      initialLocation: RouteConstants.SPLASH_ROUTE,
+      refreshListenable: GoRouterRefreshStream(
+        FirebaseAuth.instance.authStateChanges(),
+      ),
+      redirect: (context, state) {
+        if (authAsync.isLoading) {
+          return RouteConstants.SPLASH_ROUTE; // ✅ DO NOTHING
+        }
+        final user = authAsync.value;
+        final isAuthRoute =
+            state.matchedLocation == RouteConstants.LOGIN_ROUTE ||
+            state.matchedLocation == RouteConstants.REGISTER_ROUTE ||
+            state.matchedLocation == RouteConstants.FORGET_PASSWORD_ROUTE;
+
+        final isSplash = state.matchedLocation == RouteConstants.SPLASH_ROUTE;
+
+        if (user == null && !isAuthRoute) {
+          return RouteConstants.LOGIN_ROUTE;
+        }
+
+        if (user != null && (isAuthRoute || isSplash)) {
+          return RouteConstants.HOME_ROUTE;
+        }
+        return null;
+      },
+
+      routes: [
+        GoRoute(
+          path: RouteConstants.SPLASH_ROUTE,
+          builder: (_, __) => const Center(child: CircularProgressIndicator()),
+        ),
+        GoRoute(
+          path: RouteConstants.LOGIN_ROUTE,
+          builder: (context, state) => LoginScreen(),
+        ),
+
+        GoRoute(
+          path: RouteConstants.FORGET_PASSWORD_ROUTE,
+          builder: (context, state) => ForgotPasswordScreen(),
+        ),
+        GoRoute(
+          path: RouteConstants.REGISTER_ROUTE,
+          builder: (context, state) => RegisterScreen(),
+        ),
+        ShellRoute(
+          builder: (context, state, child) {
+            return Consumer(
+              builder: (context, ref, _) {
+                String title = '';
+                title = getTitle(state.uri.toString(), context, ref);
+                if (title.isEmpty) {
+                  title = getTitleFromChild(child, context, ref);
+                }
+                //      ref.read(appbarTitleProviderState).setTitle(title);
+                final int currentIndex = getIndexFromLocation(
+                  state.matchedLocation,
+                );
+                return Scaffold(
+                  appBar:
+                      Responsive.isDesktop(context)
+                          ? MenuBarWeb(title: title)
+                          : MyAppBar(
+                            itemCount:
+                                ref.watch(shoppingProviderState).itemCount,
+                          ),
+                  drawer: Responsive.isMobile(context) ? MyMenu() : null,
+                  body: child,
+                  bottomNavigationBar:
+                      Responsive.isDesktop(context)
+                          ? AppFooterWeb()
+                          : AppFooter(
+                            currentIndex: currentIndex,
+                            iconSize: iconSize,
+                            onTap: (index) => context.go(routeForIndex(index)),
+                          ),
+                );
+              },
+            );
+          },
+
+          routes: [
+            GoRoute(
+              path: RouteConstants.HOME_ROUTE,
+              builder: (context, state) => const HomeScreen(),
+              routes: [
+              ],
+            ),
+
+            /*
+            GoRoute(
+              path: RouteConstants.NOTIFICATIONS_ROUTE,
+              builder: (context, state) => NotificationScreen(),
+            ),
+            */
+            GoRoute(
+              path: RouteConstants.PROFILE_ROUTE,
+              builder:
+                  (context, state) =>
+                      const Center(child: MyProfileScreen()),
+              routes: [
+                GoRoute(
+                  path: '${RouteConstants.ACCOUNT_ROUTE}/:id',
+                  builder: (context, state) {
+                    final id = state.pathParameters['id']!;
+                    return AccountScreen(id: id);
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  });
+
+  static String getTitle(
+    String routeName,
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    if (routeName.startsWith(
+      '${RouteConstants.HOME_ROUTE}${RouteConstants.PRESSING_ROUTE}',
+    )) {
+      return AppLocalizations.of(context)!.pressing_title;
+    }
+
+    if (routeName.startsWith(RouteConstants.PROFILE_ROUTE)) {
+      return AppLocalizations.of(context)!.profile_title;
+    }
+
+    if (routeName.startsWith(RouteConstants.ORDERS_ROUTE)) {
+      return AppLocalizations.of(context)!.my_orders_title;
+    }
+
+    if (routeName.startsWith(RouteConstants.DELIVERIES_ROUTE)) {
+      return AppLocalizations.of(context)!.my_deliveries_title;
+    }
+
+    if (routeName.startsWith(RouteConstants.HOME_ROUTE)) {
+      return AppLocalizations.of(context)!.home_title;
+    }
+
+    return '';
+  }
+
+  static int getIndexFromLocation(String routeName) {
+    if (routeName.startsWith(RouteConstants.HOME_ROUTE)) return 0;
+    if (routeName.startsWith(RouteConstants.ORDERS_ROUTE)) return 1;
+    if (routeName.startsWith(RouteConstants.DELIVERIES_ROUTE)) return 2;
+    if (routeName.startsWith(RouteConstants.PROFILE_ROUTE)) return 3;
+    return 0;
+  }
+
+  static String routeForIndex(int index) {
+    switch (index) {
+      case 0:
+        return RouteConstants.HOME_ROUTE;
+      case 1:
+        return RouteConstants.ORDERS_ROUTE;
+      case 2:
+        return RouteConstants.DELIVERIES_ROUTE;
+      case 3:
+        return RouteConstants.PROFILE_ROUTE;
+      default:
+        return RouteConstants.HOME_ROUTE;
+    }
+  }
+
+  static String getTitleFromChild(
+    Widget child,
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    // handle common wrappers (Center, Padding, etc.)
+    Widget target = child;
+    if (child is Center) {
+      target = child.child ?? child;
+    }
+
+    final type = target.runtimeType.toString();
+    if (type.contains('HomeScreen')) {
+      return AppLocalizations.of(context)!.home_title;
+    }
+    if (type.contains('PressingScreen')) {
+      return AppLocalizations.of(context)!.pressing_title;
+    }
+    if (type.contains('MoveguiProfileScreen')) {
+      return AppLocalizations.of(context)!.profile_title;
+    }
+    if (type.contains('OrderScreen')) {
+      return AppLocalizations.of(context)!.my_orders_title;
+    }
+    if (type.contains('DeliveryScreen')) {
+      return AppLocalizations.of(context)!.my_deliveries_title;
+    }
+    return '';
+  }
+}
+
+class GoRouterRefreshStream extends ChangeNotifier {
+  GoRouterRefreshStream(Stream<dynamic> stream) {
+    stream.listen((_) => notifyListeners());
+  }
+}
