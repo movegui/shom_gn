@@ -84,7 +84,8 @@ class FacebookAuthenticationState extends State<FacebookAuthentication> {
           onPressed: (buttonItem) async {
             await _onPressed(context, buttonItem);
           },
-          icon: Ionicons.logo_facebook,
+          icon: Icon(Ionicons.logo_facebook, size: 24,),
+          textStyle: Theme.of(context).textTheme.displayLarge,
         );
   }
 }

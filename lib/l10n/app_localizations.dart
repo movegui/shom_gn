@@ -455,6 +455,18 @@ abstract class AppLocalizations {
   /// **'Latitude'**
   String get input_hint_latitude;
 
+  /// No description provided for @input_hint_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get input_hint_password;
+
+  /// No description provided for @input_hint_password_repeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat Password'**
+  String get input_hint_password_repeat;
+
   /// No description provided for @movegui_info_title.
   ///
   /// In en, this message translates to:
@@ -815,6 +827,12 @@ abstract class AppLocalizations {
   /// **'Profile'**
   String get profile_title;
 
+  /// No description provided for @my_profile_title.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get my_profile_title;
+
   /// No description provided for @navigation_menu_tooltip.
   ///
   /// In en, this message translates to:
@@ -850,6 +868,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Login'**
   String get label_login;
+
+  /// No description provided for @label_login_web.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get label_login_web;
 
   /// No description provided for @label_login_connect_using.
   ///
@@ -1294,6 +1318,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'My Position'**
   String get my_position;
+
+  /// No description provided for @search_flight_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Planes'**
+  String get search_flight_title;
+
+  /// No description provided for @my_reservation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'My Bookings'**
+  String get my_reservation_title;
+
+  /// No description provided for @my_trips.
+  ///
+  /// In en, this message translates to:
+  /// **'Mes trips'**
+  String get my_trips;
+
+  /// No description provided for @settings_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings_title;
+
+  /// No description provided for @opt_screen_title.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP Verification '**
+  String get opt_screen_title;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

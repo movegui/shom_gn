@@ -11,14 +11,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shom_gn/consts/app_colors.dart';
 import 'package:shom_gn/consts/route_contants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
+import 'package:shom_gn/models/opt_args_model.dart';
 import 'package:shom_gn/models/person_model.dart';
 import 'package:shom_gn/models/user_model.dart';
 import 'package:shom_gn/providers/providers.dart';
-import 'package:shom_gn/screens/auth/otp_verification_scxreen.dart';
+import 'package:shom_gn/screens/auth/otp_verification_screen.dart';
 import 'package:shom_gn/services/interfaces/i_user_service.dart';
 import 'package:shom_gn/services/model_service.dart';
 import 'package:shom_gn/widgets/error/message_widget.dart';
-
 
 import 'package:uuid/uuid.dart';
 
@@ -37,19 +37,19 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
   @override
   Future<List<UserModel>> allModels() async {
-    final snapshot =
-        await FirebaseFirestore.instance.collection(getCollectionName()).get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .get();
 
     return snapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
   }
 
   @override
   Future<List<UserModel>> getByName(String name) async {
-    final snapshot =
-        await FirebaseFirestore.instance
-            .collection(getCollectionName())
-            .where('name', isEqualTo: name)
-            .get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .where('name', isEqualTo: name)
+        .get();
 
     return snapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
   }
@@ -61,11 +61,10 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
   @override
   Future<UserModel?> getByUsername(String username) async {
-    final snapshot =
-        await FirebaseFirestore.instance
-            .collection(getCollectionName())
-            .where('username', isEqualTo: username)
-            .get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .where('username', isEqualTo: username)
+        .get();
 
     if (snapshot.docs.isEmpty) return null;
 
@@ -92,6 +91,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
             password: password,
           );
       User? user = credential.user;
+      print('the user is: ${user?.email}');
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
       }
@@ -100,7 +100,8 @@ class UserService extends ModelService<UserModel> implements IUserService {
       }
       await addModel(model);
       return model;
-    } on FirebaseException {
+    } on FirebaseException catch (e) {
+      print('error');
       MessageWidget.errorMessage(
         context,
         AppLocalizations.of(context)!.error_register_with_phone_title,
@@ -108,8 +109,8 @@ class UserService extends ModelService<UserModel> implements IUserService {
         Icon(Icons.error, color: AppColors.error),
         FlushbarPosition.TOP,
       );
+      throw Exception(e);
     }
-    return null;
   }
 
   static const String _googleSignInClientId = String.fromEnvironment(
@@ -121,8 +122,8 @@ class UserService extends ModelService<UserModel> implements IUserService {
     try {
       final GoogleSignIn googleSignIn =
           kIsWeb && _googleSignInClientId.isNotEmpty
-              ? GoogleSignIn(clientId: _googleSignInClientId)
-              : GoogleSignIn();
+          ? GoogleSignIn(clientId: _googleSignInClientId)
+          : GoogleSignIn();
 
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
@@ -156,7 +157,6 @@ class UserService extends ModelService<UserModel> implements IUserService {
       final UserModel newUser = await initializeUserWithAuthenticateUser(
         firebaseUser,
       );
-
 
       await addModel(newUser);
       return newUser;
@@ -225,7 +225,6 @@ class UserService extends ModelService<UserModel> implements IUserService {
         firebaseUser,
       );
 
-
       await addModel(newUser);
       return newUser;
     } on FirebaseException catch (e) {
@@ -252,10 +251,86 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
   @override
   Future<void> registerWithPhone(BuildContext context, UserModel user) async {
+    if (kIsWeb) {
+      final confirmationResult = await FirebaseAuth.instance
+          .signInWithPhoneNumber(user.personModel?.phone ?? '');
+
+      OptArgsModel args = OptArgsModel(
+        verificationId: confirmationResult.verificationId,
+        currentUser: user,
+        confirmationResult: confirmationResult,
+      );
+      if (!context.mounted) return;
+      print('je suis la ');
+      context.push(RouteConstants.OTP_SCREEN_ROUTE, extra: args);
+    /*  
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => OtpVerificationScreen(
+            confirmationResult: confirmationResult,
+            currentUser: user,
+            verificationId: '',
+          ),
+        ),
+      );
+      */
+      
+
+      return;
+    }
+
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: user.personModel!.phone,
       verificationCompleted: (credential) async {
         await FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      verificationFailed: (e) {
+        // erreur
+      },
+      codeSent: (verificationId, resendToken) {
+        OptArgsModel args = OptArgsModel(
+          verificationId: verificationId,
+          currentUser: user,
+          confirmationResult: null,
+        );
+        if (!context.mounted) return;
+          context.push(RouteConstants.OTP_SCREEN_ROUTE, extra: args);
+   
+
+      /*  
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => OtpVerificationScreen(
+              verificationId: verificationId,
+              currentUser: user,
+            ),
+          ),
+        );
+        */
+        
+      },
+      codeAutoRetrievalTimeout: (_) {},
+    );
+  }
+
+  /*
+  @override
+  Future<void> registerWithPhone(BuildContext context, UserModel user) async {
+    ConfirmationResult? confirmationResult = null;
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: user.personModel!.phone,
+      verificationCompleted: (credential) async {
+        if(kIsWeb){
+           confirmationResult =
+    await FirebaseAuth.instance.signInWithPhoneNumber(
+      user.personModel!.phone,
+    );
+        }else {
+          await FirebaseAuth.instance.signInWithCredential(credential);
+        }
+        
       },
       verificationFailed: (e) {
         MessageWidget.errorMessage(
@@ -274,6 +349,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
                 (_) => OtpVerificationScreen(
                   verificationId: verificationId,
                   currentUser: user,
+                  confirmationResult: confirmationResult
                 ),
           ),
         );
@@ -281,6 +357,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
       codeAutoRetrievalTimeout: (_) {},
     );
   }
+  */
 
   @override
   Future<UserCredential> verifyOtp(
@@ -297,11 +374,10 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
   @override
   Future<UserModel?> getByEmail(String email) async {
-    final snapshot =
-        await FirebaseFirestore.instance
-            .collection(getCollectionName())
-            .where('person.email', isEqualTo: email.trim().toLowerCase())
-            .get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .where('person.email', isEqualTo: email.trim().toLowerCase())
+        .get();
 
     if (snapshot.docs.isEmpty) return null;
     return UserModel.fromJson(snapshot.docs.first.data());
@@ -310,11 +386,10 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
   @override
   Future<UserModel?> getByPhone(String phone) async {
-    final snapshot =
-        await FirebaseFirestore.instance
-            .collection(getCollectionName())
-            .where('person.phone', isEqualTo: phone)
-            .get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .where('person.phone', isEqualTo: phone)
+        .get();
 
     if (snapshot.docs.isEmpty) return null;
     return UserModel.fromJson(snapshot.docs.first.data());
@@ -322,11 +397,10 @@ class UserService extends ModelService<UserModel> implements IUserService {
   }
 
   Future<UserModel> getById(String id) async {
-    final snapshot =
-        await FirebaseFirestore.instance
-            .collection(getCollectionName())
-            .doc(id)
-            .get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection(getCollectionName())
+        .doc(id)
+        .get();
 
     if (!snapshot.exists || snapshot.data() == null) {
       throw Exception("User not found");
@@ -348,17 +422,20 @@ class UserService extends ModelService<UserModel> implements IUserService {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future<UserModel> initializeUserWithPhone(String phoneNumber) async {
+  Future<UserModel> initializeUserWithPhone(
+    String phoneNumber,
+    UserRole role,
+  ) async {
     late UserModel currentUser;
 
     currentUser = UserModel(
       updatedAt: DateTime.now(),
       id: Uuid().v4(),
-      name: phoneNumber,
+      name: '',
       createdAt: DateTime.now(),
       username: phoneNumber,
       isVerified: false,
-      role: '',
+      role: role.name,
       personModel: PersonModel(
         id: Uuid().v4(),
         name: phoneNumber,
@@ -456,10 +533,9 @@ class UserService extends ModelService<UserModel> implements IUserService {
     if (currentUser == null) {
       await signOut();
       Fluttertoast.showToast(
-        msg:
-            message.isNotEmpty
-                ? message
-                : 'User not found in the database, please check your email and password',
+        msg: message.isNotEmpty
+            ? message
+            : 'User not found in the database, please check your email and password',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 5,
@@ -567,22 +643,21 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
     final result = await showDialog<bool>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(AppLocalizations.of(context)!.compte_delete_title),
-            content: Text(AppLocalizations.of(context)!.compte_delete_message),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: Text(AppLocalizations.of(context)!.btn_cancel),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: () => Navigator.pop(context, true),
-                child: Text(AppLocalizations.of(context)!.btn_delete),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.compte_delete_title),
+        content: Text(AppLocalizations.of(context)!.compte_delete_message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(AppLocalizations.of(context)!.btn_cancel),
           ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(AppLocalizations.of(context)!.btn_delete),
+          ),
+        ],
+      ),
     );
     if (result != true) return;
     try {

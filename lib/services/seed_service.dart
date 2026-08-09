@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/geo_cordinates_model.dart';
 import 'package:shom_gn/services/api_service.dart';
 import 'package:uuid/uuid.dart';
@@ -19,7 +19,7 @@ class SeedService {
     name: faker.company.name(),
     createdAt: DateTime.now(),
     description: faker.company.random.fromPattern(['description']),
-    address: AdressModel(
+    address: AddressModel(
       address: faker.address.streetName(),
       id: Uuid().v4(),
       name: faker.address.streetAddress(),
@@ -52,7 +52,7 @@ class SeedService {
           gender: 'm',
           birthDate: faker.date.dateTime(),
           addresses: [
-            AdressModel(
+            AddressModel(
               address: faker.address.streetName(),
               id: Uuid().v4(),
               name: faker.address.streetAddress(),
@@ -128,7 +128,7 @@ class SeedService {
     gender: 'm',
     birthDate: faker.date.dateTime(),
     addresses: [
-      AdressModel(
+      AddressModel(
         address: faker.address.streetName(),
         id: Uuid().v4(),
         name: faker.address.streetAddress(),
@@ -145,7 +145,7 @@ class SeedService {
   );
   */
 
-  Future<AdressModel> getgeneratedAdress() async => AdressModel(
+  Future<AddressModel> getgeneratedAdress() async => AddressModel(
     address: faker.address.streetName(),
     id: Uuid().v4(),
     name: faker.address.streetAddress(),

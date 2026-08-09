@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 
 
 class AddressProvider extends ChangeNotifier {
-  AdressModel? _address;
+  AddressModel? _address;
 
-  AdressModel? get address => _address;
+  AddressModel? get address => _address;
 
-  void setAdress(AdressModel address) {
+  void setAddress(AddressModel address) {
     _address = address;
     notifyListeners();
   }

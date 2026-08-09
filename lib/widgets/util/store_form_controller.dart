@@ -29,7 +29,7 @@ abstract class StoreFormController<T extends StoreModel>
   Uint8List? webImage;
   StoreTypeModel? selectedType;
   CategoriesModel? categoriesModel;
-  AdressModel? adressModel;
+  AddressModel? AddressModel;
 
   void dispose() {
     name.dispose();
@@ -59,7 +59,7 @@ abstract class StoreFormController<T extends StoreModel>
     weeklyHours.clear();
     selectedType = null;
     categoriesModel = null;
-    adressModel = null;
+    AddressModel = null;
   }
 
   @override

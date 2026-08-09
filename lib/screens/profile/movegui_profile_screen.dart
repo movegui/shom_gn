@@ -15,6 +15,7 @@ import 'package:shom_gn/models/person_model.dart';
 import 'package:shom_gn/models/user_model.dart';
 import 'package:shom_gn/screens/auth/login_screen.dart';
 import 'package:shom_gn/services/image_service.dart';
+import 'package:shom_gn/services/interfaces/i_user_service.dart';
 import 'package:shom_gn/services/my_app_functions.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/user_service.dart';
@@ -153,7 +154,7 @@ class MoveguiProfileScreenState extends State<MyProfileScreen> {
         setState(() {
           currentUser = updatedUser;
         });
-            } else {
+      } else {
         MessageWidget.errorMessage(
           context,
           AppLocalizations.of(context)!.error_send_mail_title,
@@ -205,7 +206,6 @@ class MoveguiProfileScreenState extends State<MyProfileScreen> {
       } else if (auth?.currentUser?.phoneNumber != null) {
         if (loginMode != AppConstants.LOGIN_PHONE_MODE) {
           loginMode = AppConstants.LOGIN_PHONE_MODE;
-          //    context.read<LoginModProvider>().setLoginMod(loginMode);
         }
         setState(() {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -226,6 +226,7 @@ class MoveguiProfileScreenState extends State<MyProfileScreen> {
                 currentUser =
                     await userService.initializeUserWithPhone(
                           auth!.currentUser!.phoneNumber!,
+                          UserRole.user
                         )
                         as UserModel?;
               });
@@ -248,18 +249,16 @@ class MoveguiProfileScreenState extends State<MyProfileScreen> {
               id: auth?.currentUser?.uid ?? '',
               name: auth?.currentUser?.displayName ?? '',
               createdAt: DateTime.now(),
-              username:
-                  loginMode == AppConstants.LONGIN_EMAIL_MODE
-                      ? auth?.currentUser?.email
-                      : loginMode == AppConstants.LOGIN_PHONE_MODE
-                      ? auth?.currentUser?.phoneNumber
-                      : null,
-              isVerified:
-                  loginMode == AppConstants.LONGIN_EMAIL_MODE
-                      ? auth!.currentUser!.emailVerified
-                      : loginMode == AppConstants.LOGIN_PHONE_MODE
-                      ? true
-                      : false,
+              username: loginMode == AppConstants.LONGIN_EMAIL_MODE
+                  ? auth?.currentUser?.email
+                  : loginMode == AppConstants.LOGIN_PHONE_MODE
+                  ? auth?.currentUser?.phoneNumber
+                  : null,
+              isVerified: loginMode == AppConstants.LONGIN_EMAIL_MODE
+                  ? auth!.currentUser!.emailVerified
+                  : loginMode == AppConstants.LOGIN_PHONE_MODE
+                  ? true
+                  : false,
               personModel: PersonModel(
                 id: Uuid().v4(),
                 name: auth?.currentUser?.displayName ?? '',
@@ -267,14 +266,12 @@ class MoveguiProfileScreenState extends State<MyProfileScreen> {
                 firstName: '',
                 lastName: auth?.currentUser?.displayName ?? '',
                 profileImageUrl: null,
-                email:
-                    loginMode == AppConstants.LONGIN_EMAIL_MODE
-                        ? auth?.currentUser?.email
-                        : null,
-                phone:
-                    loginMode == AppConstants.LOGIN_PHONE_MODE
-                        ? auth?.currentUser?.phoneNumber
-                        : null,
+                email: loginMode == AppConstants.LONGIN_EMAIL_MODE
+                    ? auth?.currentUser?.email
+                    : null,
+                phone: loginMode == AppConstants.LOGIN_PHONE_MODE
+                    ? auth?.currentUser?.phoneNumber
+                    : null,
                 gender: '',
                 birthDate: null,
                 addresses: [],
@@ -343,22 +340,22 @@ class MoveguiProfileScreenState extends State<MyProfileScreen> {
     return _sectionCard([
       currentUser != null
           ? ProfileMenuTitle(
-            icon: Icons.logout,
-            title: AppLocalizations.of(context)!.profile_menu_logout,
-            onTap: () async {
-              await userService.signOut();
-              setState(() {
-                currentUser == null;
-              });
-            },
-            enabled: true,
-          )
+              icon: Icons.logout,
+              title: AppLocalizations.of(context)!.profile_menu_logout,
+              onTap: () async {
+                await userService.signOut();
+                setState(() {
+                  currentUser == null;
+                });
+              },
+              enabled: true,
+            )
           : ProfileMenuTitle(
-            icon: Icons.login,
-            title: AppLocalizations.of(context)!.profile_menu_login,
-            onTap: () => context.push(RouteConstants.LOGIN_ROUTE),
-            enabled: true,
-          ),
+              icon: Icons.login,
+              title: AppLocalizations.of(context)!.profile_menu_login,
+              onTap: () => context.push(RouteConstants.LOGIN_ROUTE),
+              enabled: true,
+            ),
 
       ProfileMenuTitle(
         icon: Icons.person_add,
@@ -399,10 +396,9 @@ class MoveguiProfileScreenState extends State<MyProfileScreen> {
       ProfileMenuTitle(
         icon: Icons.key,
         title: AppLocalizations.of(context)!.profile_menu_account,
-        onTap:
-            () => navigateToRoute(
-              '${RouteConstants.PROFILE_ROUTE}${RouteConstants.ACCOUNT_ROUTE}/${currentUser?.id}',
-            ),
+        onTap: () => navigateToRoute(
+          '${RouteConstants.PROFILE_ROUTE}${RouteConstants.ACCOUNT_ROUTE}/${currentUser?.id}',
+        ),
         enabled: true,
       ),
       ProfileMenuTitle(

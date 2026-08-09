@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/services/form_services/adress_form_service.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/widgets/address/default_address_widget.dart';

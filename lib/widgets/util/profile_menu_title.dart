@@ -16,6 +16,7 @@ class ProfileMenuTitle extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListTile(
+    
       leading: enabled ? Icon(icon, color: Theme.of(context).colorScheme.primary) : Icon(icon, color: AppColors.disabled),
       title: Text(
         title,

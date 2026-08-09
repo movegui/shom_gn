@@ -7,7 +7,7 @@ import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/models/user_model.dart';
 import 'package:shom_gn/widgets/auth/movegui_profile_default_image.dart';
 import 'package:shom_gn/widgets/auth/movegui_profile_header_update_name.dart';
-import 'package:shom_gn/widgets/subtitle_text.dart';
+import 'package:shom_gn/widgets/input/subtitle_text.dart';
 
 class MyProfileHeaderWidget extends StatefulWidget {
   final UserModel? currentUser;

@@ -1,6 +1,6 @@
 
 
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -13,7 +13,7 @@ class PersonModel extends Model {
   final String? phone;
   final String gender;
   final DateTime? birthDate;
-   List<AdressModel?>? addresses;
+   List<AddressModel?>? addresses;
   final String? nationality;
 
   PersonModel({
@@ -67,16 +67,16 @@ class PersonModel extends Model {
     addresses: (json['addresses'] as List<dynamic>? ?? [])
         .map((e) {
           if (e is Map<String, dynamic>) {
-            return AdressModel.fromJson(e);
+            return AddressModel.fromJson(e);
           } else {
             print("Warning: invalid address entry: $e");
             return null;
           }
         })
         .where((e) => e != null)
-        .cast<AdressModel>()
+        .cast<AddressModel>()
         .toList(),
-    // addresses: (json['addresses'] as List? ?? []).map((e) => AdressModel.fromJson(e)).toList(),
+    // addresses: (json['addresses'] as List? ?? []).map((e) => AddressModel.fromJson(e)).toList(),
     nationality: json['nationality'],
   );
   factory PersonModel.empty() => PersonModel(

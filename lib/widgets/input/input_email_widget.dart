@@ -8,6 +8,7 @@ class InputEmailWidget extends StatelessWidget {
   final FocusNode emailFocusNode;
   final FocusNode? nextFocusNode;
 
+
   const InputEmailWidget({
     super.key,
     this.nextFocusNode,
@@ -20,14 +21,18 @@ class InputEmailWidget extends StatelessWidget {
     return InputWidget(
       controller: emailController,
       focusNode: emailFocusNode,
-      icon: Icons.mail,
+      prefixIcon: Icon(Icons.mail),
       nextFocusNode: nextFocusNode,
       textInputType: TextInputType.emailAddress,
-      hinterText: AppLocalizations.of(context)!.input_hint_adress_email,
+      hintText: AppLocalizations.of(context)!.input_hint_adress_email,
       validator: (value) {
         return MyValidators.emailValidator(value);
       },
       onChange: (String value) {},
+      fontSize: 14,
+      fontFamily: 'Roboto',  
+      fontweight: FontWeight.bold,
+      isFullBorder: true,
     );
   }
 }

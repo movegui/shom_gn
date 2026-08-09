@@ -33,10 +33,8 @@ class GoogleAuthenticationState extends State<GoogleAuthentication> {
     try {
       if (!item.enabled) {
         setState(() => _isLoading = true);
-        //  final userService = UserService(api: null); // Update with your API instance
         final user = await userService.registerWithGoogle(context);
         if (user != null) {
-          // widget.onLoginSuccess?.call();
           context.go(item.routeName!);
         }
       } else {
@@ -84,7 +82,8 @@ class GoogleAuthenticationState extends State<GoogleAuthentication> {
           onPressed: (buttonItem) async {
             await _onPressed(context, buttonItem);
           },
-          icon: Ionicons.logo_google,
+          icon: Icon(Ionicons.logo_google , size: 24,),
+          textStyle: Theme.of(context).textTheme.displayLarge,
         );
   }
 }

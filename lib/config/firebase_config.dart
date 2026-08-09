@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,12 +20,12 @@ class FirebaseConfig {
   static void _connectToEmulators() {
   
     final host = kIsWeb ? '127.0.0.1' : '10.0.2.2'; 
-    FirebaseFirestore.instance.useFirestoreEmulator(host, 8080);
+    FirebaseFirestore.instance.useFirestoreEmulator(host, 7080);
     // 🔐 Auth
-   // FirebaseAuth.instance.useAuthEmulator(host, 9099);
+     FirebaseAuth.instance.useAuthEmulator(host, 8099);
     // ⚡ Functions
     FirebaseFunctions.instance.useFunctionsEmulator(host, 5001);
     //  Storage
-     FirebaseStorage.instance.useStorageEmulator(host, 9199);
+     FirebaseStorage.instance.useStorageEmulator(host, 8199);
   }
 }

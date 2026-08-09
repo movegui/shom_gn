@@ -189,6 +189,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get input_hint_latitude => 'Latitude';
 
   @override
+  String get input_hint_password => 'Mot de Passe';
+
+  @override
+  String get input_hint_password_repeat => 'Répéter le Mot de Passe';
+
+  @override
   String get movegui_info_title => 'MoveGui – Livraison & Transport à Moto en Guinée';
 
   @override
@@ -369,6 +375,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profile_title => 'Profil';
 
   @override
+  String get my_profile_title => 'Mon Profil';
+
+  @override
   String get navigation_menu_tooltip => 'Navigation Menu';
 
   @override
@@ -385,6 +394,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get label_login => 'se connecter';
+
+  @override
+  String get label_login_web => 'Connectez-vous';
 
   @override
   String get label_login_connect_using => 'Ou connectez-vous via';
@@ -607,4 +619,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get my_position => 'Ma Position';
+
+  @override
+  String get search_flight_title => 'Vols';
+
+  @override
+  String get my_reservation_title => 'Mes Reservations';
+
+  @override
+  String get my_trips => 'Mes Voyages';
+
+  @override
+  String get settings_title => 'Paramètres';
+
+  @override
+  String get opt_screen_title => 'Verification OTP';
 }

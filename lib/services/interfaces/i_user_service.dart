@@ -1,10 +1,11 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shom_gn/models/user_model.dart';
 
 
-enum UserRole { Admin, User, Employe, Guest, SuperAdmin, Manager }
+enum UserRole { admin, user, employe, guest, superAdmin, manager }
 
 abstract class IUserService {
   Future<UserModel?> getByUsername(String username);

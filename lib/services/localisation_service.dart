@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/geo_cordinates_model.dart';
 import 'package:shom_gn/movegui_platform.dart';
 import 'package:shom_gn/services/api_service.dart';
@@ -17,7 +17,7 @@ class LocalisationService {
   final ApiService api;
 
   LocalisationService({required this.api});
-  AdressModel? currentAdress;
+  AddressModel? currentAdress;
 
   Future<Position?> getCurrentPosition() async {
     bool serviceEnabled;
@@ -70,10 +70,10 @@ class LocalisationService {
     );
   }
 
-  Future<AdressModel?> getAddressFromPosition(
+  Future<AddressModel?> getAddressFromPosition(
     double? latitude,
     double? longitude,
-    AdressModel? currentAdress
+    AddressModel? currentAdress
   ) async {
 
     try {
@@ -91,21 +91,21 @@ class LocalisationService {
         // longitude = -13.648931778824837;
         // latitude = 9.58162511432078;
         final myplace = getAdressFromGeoCordinates(latitude, longitude);
-        return myplace ?? AdressModel.getDaulftObject();
+        return myplace ?? AddressModel.getDaulftObject();
       }
 
       final placemarks = await placemarkFromCoordinates(latitude, longitude);
 
       if (placemarks.isEmpty) {
         final myplace = getAdressFromGeoCordinates(latitude, longitude);
-        return myplace ?? AdressModel.getDaulftObject();
+        return myplace ?? AddressModel.getDaulftObject();
       }
 
       final place = placemarks.first;
 
       print(place.toJson());
 
-      return AdressModel(
+      return AddressModel(
         address: place.street!,
         id: Uuid().v4(),
         name: 'ot_${place.street!}',
@@ -123,7 +123,7 @@ class LocalisationService {
     }
   }
 
-  Future<AdressModel?>? getAdressFromGeoCordinates(
+  Future<AddressModel?>? getAdressFromGeoCordinates(
     double latitude,
     double longitude,
   ) async {
@@ -138,7 +138,7 @@ class LocalisationService {
       final addresses = data['address'].toString().split(',');
 
       if (addresses.length > 7) {
-        final addressModel = AdressModel(
+        final addressModel = AddressModel(
           address: '${addresses[0]} ${addresses[1]}',
           id: Uuid().v4(),
           name: 'ot_${addresses[0]} ${addresses[1]}',

@@ -20,11 +20,13 @@ class AppTheme {
     inputDecorationTheme: _textFieldTheme(),
 
     elevatedButtonTheme: _elevatedButtonTheme(),
+      iconButtonTheme: _iconButtonTheme(),
 
     textTheme: _textTheme(),
     iconTheme: const IconThemeData(
       color: AppColors.primary,
     ),
+       textButtonTheme: _textButtonTheme()
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -47,6 +49,8 @@ class AppTheme {
     elevatedButtonTheme: _elevatedButtonTheme(),
 
     textTheme: _textTheme(),
+    textButtonTheme: _textButtonTheme(),
+    iconButtonTheme: _iconButtonTheme(),
   );
   
 
@@ -97,6 +101,37 @@ class AppTheme {
     );
   }
 
+  static TextButtonThemeData _textButtonTheme (){
+    return TextButtonThemeData(
+      style: TextButton.styleFrom(
+        backgroundColor: AppColors.onPrimary, // MoveGui
+        foregroundColor: AppColors.primary,
+
+        elevation: 3,
+
+        minimumSize: const Size(0, 50),
+
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 14,
+        ),
+
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+
+        textStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+        iconColor: AppColors.primary,
+        iconSize: 14,
+        disabledForegroundColor: AppColors.disabled,
+        disabledIconColor: AppColors.disabled,
+      ),
+    );
+  }
+
 
   static ElevatedButtonThemeData _elevatedButtonTheme() {
     return ElevatedButtonThemeData(
@@ -124,52 +159,114 @@ class AppTheme {
         iconColor: AppColors.onPrimary,
         iconSize: 14,
         disabledForegroundColor: AppColors.disabled,
-        disabledIconColor: AppColors.disabled 
+        disabledIconColor: AppColors.disabled ,
+        
       ),
     );
   }
+
+  static IconButtonThemeData _iconButtonTheme() {
+  return IconButtonThemeData(
+    style: ButtonStyle(
+      padding: WidgetStateProperty.all(
+        const EdgeInsets.all(8.0),
+      ),
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+      backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.hovered)) {
+          return AppColors.selectionColor;
+        }
+
+        if (states.contains(WidgetState.pressed)) {
+          return AppColors.selectionColor;
+        }
+
+        return AppColors.primary;
+      }),
+      foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.hovered)) {
+          return AppColors.onPrimary;
+        }
+
+        return AppColors.onPrimary;
+      }),
+      iconSize: WidgetStateProperty.all(20),
+    ),
+  );
+}
 
  static TextTheme _textTheme() {
     return TextTheme(
       // Titres des pages
       headlineLarge: TextStyle(
         fontSize: 32,
-        fontWeight: FontWeight.bold
+        fontWeight: FontWeight.bold,
+        color: AppColors.onPrimary,
       ),
 
       headlineMedium: TextStyle(
         fontSize: 28,
         fontWeight: FontWeight.bold,
+        color: AppColors.onPrimary,
+      ),
+
+      headlineSmall: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: AppColors.onPrimary,
       ),
 
       // Titres de cards
       titleLarge: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w700,
+        color: AppColors.onPrimary,
       ),
 
       titleMedium: TextStyle(
         fontSize: 18,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w600,    
+        color: AppColors.onPrimary,
       ),
 
       // Texte normal
       bodyLarge: TextStyle(
         fontSize: 16,
+        color: AppColors.onPrimary,
       ),
 
       bodyMedium: TextStyle(
         fontSize: 14,
+        color: AppColors.onPrimary,
       ),
 
       bodySmall: TextStyle(
         fontSize: 12,
+        color: AppColors.onPrimary, 
       ),
 
       // Boutons
       labelLarge: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
+        fontSize: 24,
+        fontWeight: FontWeight.w600, 
+        color: AppColors.onPrimary,
+      ),
+
+      displayLarge: TextStyle(
+        fontSize: 24,
+        color: AppColors.onPrimary,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 18,
+        color: AppColors.onPrimary,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 12,
+        color: AppColors.onPrimary,
       ),
     );
   

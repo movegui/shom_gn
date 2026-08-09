@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/model.dart';
 import 'package:shom_gn/models/service_model.dart';
 import 'package:shom_gn/services/api_service.dart';
@@ -42,22 +42,22 @@ abstract class ModelService<T extends Model> {
     return sum;
   }
 
-  Future<AdressModel> addAdress(String id, AdressModel adress) async {
+  Future<AddressModel> addAdress(String id, AddressModel adress) async {
     await FirebaseFirestore.instance
         .collection(getCollectionName())
         .doc(id)
-        .collection(AdressModel.getCollectionName())
+        .collection(AddressModel.getCollectionName())
         .doc(adress.id)
         .set(adress.toJson());
 
     return adress;
   }
 
-  Future<AdressModel> updateAddress(String userId, AdressModel address) async {
+  Future<AddressModel> updateAddress(String userId, AddressModel address) async {
     await FirebaseFirestore.instance
         .collection(getCollectionName())
         .doc(userId)
-        .collection(AdressModel.getCollectionName())
+        .collection(AddressModel.getCollectionName())
         .doc(address.id)
         .set(address.toJson(), SetOptions(merge: true));
 
@@ -66,7 +66,7 @@ abstract class ModelService<T extends Model> {
 
   Future<void> updateAddresses(
     String userId,
-    List<AdressModel?>? addresses,
+    List<AddressModel?>? addresses,
   ) async {
     for (final address in addresses!) {
       await updateAddress(userId, address!);

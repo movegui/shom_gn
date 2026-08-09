@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shom_gn/config/env_dev.dart';
 import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/models/user_model.dart';
 import 'package:shom_gn/responsive.dart';
@@ -20,7 +20,7 @@ class AddAdressWidget extends StatefulWidget {
   final ValueChanged<bool> onCountChange;
   final UserModel user;
   final bool enabledAsStandard;
-  final List<AdressModel?>? adresses;
+  final List<AddressModel?>? adresses;
   final void Function(String, int) onAdressTypeChange;
   final void Function(String, int) onCommuneChange;
   final VoidCallback onChange;
@@ -67,7 +67,7 @@ class AddAdressWidgetState extends State<AddAdressWidget> {
     });
   }
 
-  Future<List<AdressModel?>?> getAddresses() async {
+  Future<List<AddressModel?>?> getAddresses() async {
     return await adressFormService.getModels(formControllers);
   }
 
@@ -98,7 +98,7 @@ class AddAdressWidgetState extends State<AddAdressWidget> {
   }
 
   Future<void> _addAdress() async {
-    AdressModel? adressTestData;
+    AddressModel? adressTestData;
 
     if (seedService.api.env is EnvDev) {
       adressTestData = await seedService.getgeneratedAdress();
@@ -210,7 +210,7 @@ class AddAdressWidgetState extends State<AddAdressWidget> {
                         enabled: true,
                         routeName: '',
                       ),
-                      icon: Icons.add,
+                      icon: Icon(Icons.add),
                       //   backgroundColor: AppColors.darkPrimary,
                     )
                   : SizedBox(),

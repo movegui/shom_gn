@@ -11,7 +11,7 @@ import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/services/my_app_functions.dart';
 import 'package:shom_gn/widgets/app/separator_widget.dart';
 import 'package:shom_gn/widgets/auth/validation_button.dart';
-import 'package:shom_gn/widgets/subtitle_text.dart';
+import 'package:shom_gn/widgets/input/subtitle_text.dart';
 import 'package:shom_gn/widgets/title_text.dart';
 
 

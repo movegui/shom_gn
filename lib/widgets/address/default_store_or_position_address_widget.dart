@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/widgets/address/default_address_widget.dart';
 import 'package:shom_gn/widgets/address/default_selection_widget.dart';
 
 
 class DefaultStoreOrPositionAddressWidget extends StatelessWidget {
-  final AdressModel? model;
+  final AddressModel? model;
   final String? defaultId;
   final ValueChanged<String?> onDefaultChange;
   final String? title;

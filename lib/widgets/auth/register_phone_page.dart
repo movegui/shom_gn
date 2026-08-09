@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shom_gn/consts/route_contants.dart';
+import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/models/user_model.dart';
 import 'package:shom_gn/responsive.dart';
+import 'package:shom_gn/services/interfaces/i_user_service.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/user_service.dart';
 import 'package:shom_gn/widgets/app/separator_widget.dart';
@@ -50,8 +52,10 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
   Future<void> _registerFCT(BuildContext context, ButtonInfo item) async {
     currentUser = await userService.initializeUserWithPhone(
       _phoneNumberController.text,
+      UserRole.user
     );
     print(currentUser.toJson());
+    if(!context.mounted) return;
     await userService.registerWithPhone(context, currentUser);
   }
 
@@ -69,22 +73,21 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
                 phoneController: _phoneNumberController,
                 phoneFocusNode: _phoneNumberFocusNode,
               ),
-              Responsive.isDesktop(context)
-                  ? SeparatorWidget(height: 20)
-                  : SizedBox(),
-              ValidationButton(
-                fn: (ButtonInfo item) async {
-                  await _registerFCT(context, item);
-                },
-                buttonItem: ButtonInfo(
-                 title:  AppLocalizations.of(context)!.btn_register_label,
-                 enabled:  true,
-                  routeName: RouteConstants.REGISTER_ROUTE,
+              SizedBox(height: WidgetConstants.sepWidgetHeight),
+              Padding(
+                padding: const EdgeInsets.all(WidgetConstants.sepWidget),
+                child: ValidationButton(
+                  fn: (ButtonInfo item) async {
+                    await _registerFCT(context, item);
+                  },
+                  buttonItem: ButtonInfo(
+                    title: AppLocalizations.of(context)!.btn_register_label,
+                    enabled: true,
+                    routeName: RouteConstants.REGISTER_ROUTE,
+                  ),
+                  icon: Icon(Icons.person, size: 24,),
                 ),
               ),
-              Responsive.isDesktop(context)
-                  ? SeparatorWidget(height: 20)
-                  : SizedBox(),
               OtherRegistrationWidget(),
             ],
           ),

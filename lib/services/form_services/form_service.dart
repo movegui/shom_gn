@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/geo_cordinates_model.dart';
 import 'package:shom_gn/models/model.dart';
 import 'package:shom_gn/models/person_model.dart';
@@ -31,7 +31,7 @@ abstract class FormService<M extends Model, F extends FormController<M>> impleme
           createdAt: DateTime.now(),
           username: null,
           isVerified: false,
-          role: UserRole.Guest.name,
+          role: UserRole.guest.name,
           personModel: PersonModel(
             id: const Uuid().v4(),
             firstName: elem.firstName.text.trim(),
@@ -47,7 +47,7 @@ abstract class FormService<M extends Model, F extends FormController<M>> impleme
             ),
             birthDate: elem.birthdate,
             addresses: [
-              AdressModel(
+              AddressModel(
                 address: elem.addressesForms[0].address.text.trim(),
                 id: Uuid().v4(),
                 name: elem.addressesForms[0].selectedType,

@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:shom_gn/consts/constants.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/geo_cordinates_model.dart';
 import 'package:shom_gn/widgets/formsControllers/form_controller.dart';
 import 'package:uuid/uuid.dart';
 
-class AddressFormController extends FormController<AdressModel> {
+class AddressFormController extends FormController<AddressModel> {
   final district = TextEditingController();
   final longitude = TextEditingController();
   final latitude = TextEditingController();
@@ -36,7 +36,7 @@ class AddressFormController extends FormController<AdressModel> {
   }
 
   @override
-  Future<void> setData(AdressModel model) async {
+  Future<void> setData(AddressModel model) async {
     longitude.text = model.geoCordinates?.longitude?.toString() ?? '';
     latitude.text = model.geoCordinates?.latitude?.toString() ?? '';
     district.text = model.district!;
@@ -64,7 +64,7 @@ class AddressFormController extends FormController<AdressModel> {
   }
 
   @override
-  Future<AdressModel> getModel() async => AdressModel(
+  Future<AddressModel> getModel() async => AddressModel(
     address: address.text,
     id: id ?? Uuid().v4(),
     name: '${address.text}_${district.text}_$selectedMunicipality',

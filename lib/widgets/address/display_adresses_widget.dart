@@ -5,7 +5,7 @@ import 'package:shom_gn/consts/app_colors.dart';
 import 'package:shom_gn/consts/app_constants.dart';
 import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/responsive.dart';
 import 'package:shom_gn/services/form_services/adress_form_service.dart';
@@ -23,9 +23,9 @@ import 'package:shom_gn/widgets/util/button_widget.dart';
 
 
 class DisplayAdressesWidget extends ConsumerStatefulWidget {
-  final AdressModel? storeAddress;
-  final AdressModel? currentAddress;
-  final List<AdressModel?>? addresses;
+  final AddressModel? storeAddress;
+  final AddressModel? currentAddress;
+  final List<AddressModel?>? addresses;
   final String? storeSelectionTitle;
   final void Function(bool? value, String? selectedId) onChange;
   final void Function(bool? value, String? selectedId) onStoreSelection;
@@ -61,7 +61,7 @@ class DisplayAdressesWidgetState extends ConsumerState<DisplayAdressesWidget> {
   late LocalisationService localisationService;
  // late AdressService adressService;
   String _defaultAddressId = '';
- // AdressModel? currentAddress = null;
+ // AddressModel? currentAddress = null;
    bool isLoading = true;
 
   @override
@@ -108,7 +108,7 @@ class DisplayAdressesWidgetState extends ConsumerState<DisplayAdressesWidget> {
     }
   }
 
-  Future<List<AdressModel?>?> getAddresses() async {
+  Future<List<AddressModel?>?> getAddresses() async {
     return await adressFormService.getModels(formControllers);
   }
 

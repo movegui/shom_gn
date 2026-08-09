@@ -1,4 +1,5 @@
-{
+
+    {
     "no_phone_number": "Pas de Téléphone",
     "@no_phone_number": {},
     "no_email": "Pas d'Email",
@@ -127,6 +128,10 @@
     "@input_hint_longitude": {},
     "input_hint_latitude": "Latitude",
     "@input_hint_latitude": {},
+    "input_hint_password": "Mot de Passe",
+    "@input_hint_password": {},
+    "input_hint_password_repeat": "Répéter le Mot de Passe",
+    "@input_hint_password_repeat": {},
     "movegui_info_title": "MoveGui – Livraison & Transport à Moto en Guinée",
     "@movegui_info_title": {},
     "movegui_info_text_1": "MoveGui est une entreprise innovante spécialisée dans la livraison de nourriture et le transport à moto en Guinée.Notre mission est de rendre la livraison plus accessible, plus transparente et plus économique pour tous.",
@@ -249,6 +254,8 @@
     "@my_deliveries_title": {},
     "profile_title": "Profil",
     "@profile_title": {},
+    "my_profile_title": "Mon Profil",
+    "@my_profile_title":{},
     "login_title": "Connexion",
     "@login_title": {},
     "register_title": "Enregistrement",
@@ -261,6 +268,8 @@
     "@label_login_forget_password": {},
     "label_login": "se connecter",
     "@label_login": {},
+    "label_login_web": "Connectez-vous",
+    "@label_login_web": {},
     "label_login_connect_using": "Ou connectez-vous via",
     "@label_login_connect_using": {},
     "label_login_invite": "Invité ?",
@@ -406,5 +415,15 @@
     "current_position": "Actuelle Position",
     "@current_position": {},
     "my_position": "Ma Position",
-    "@my_position": {}
+    "@my_position": {},
+    "search_flight_title": "Vols",
+    "@search_flight_title": {},
+    "my_reservation_title": "Mes Reservations",
+    "@my_reservation_title": {},
+    "my_trips": "Mes Voyages",
+    "@my_trips": {},
+    "settings_title": "Paramètres",
+    "@settings_title": {},
+    "opt_screen_title": "Verification OTP",
+    "@opt_screen_title":{}
 }

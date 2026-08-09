@@ -16,7 +16,7 @@ class AppImage extends StatelessWidget {
                 color: Theme.of(context).scaffoldBackgroundColor,
                 image: DecorationImage(
                   image: AssetImage(
-                    AssetsManager.moveguiIcon,
+                    AssetsManager.logo,
                   ),
                   fit: BoxFit.fill, // covers entire container
                 ),

@@ -3,7 +3,7 @@ import 'package:shom_gn/models/geo_cordinates_model.dart';
 import 'package:shom_gn/models/model.dart';
 import 'package:uuid/uuid.dart';
 
-class AdressModel extends Model {
+class AddressModel extends Model {
   final GeoCordinatesModel? geoCordinates;
   final String? zoneId;
   final String address;
@@ -14,7 +14,7 @@ class AdressModel extends Model {
   final String? ville;
   final String? pays;
   bool isDefault;
-  AdressModel({
+  AddressModel({
     this.geoCordinates,
     this.zoneId,
     required this.address,
@@ -45,7 +45,7 @@ class AdressModel extends Model {
     'isDefault': isDefault,
   };
 
-  factory AdressModel.fromJson(Map<String, dynamic> json) => AdressModel(
+  factory AddressModel.fromJson(Map<String, dynamic> json) => AddressModel(
     id: json['id'] ?? '',
     name: json['name'] ?? '',
     createdAt:
@@ -68,7 +68,7 @@ class AdressModel extends Model {
     return '$address , $district, $minucipality, $ville, $pays';
   }
 
-  static AdressModel getDaulftObject() => AdressModel(
+  static AddressModel getDaulftObject() => AddressModel(
     address: '',
     id: Uuid().v4(),
     name: '',

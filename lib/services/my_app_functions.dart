@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shom_gn/widgets/title_text.dart';
 
 
-import '../widgets/subtitle_text.dart';
+import '../widgets/input/subtitle_text.dart';
 import 'assets_manager.dart';
 
 class MyAppFunctions {

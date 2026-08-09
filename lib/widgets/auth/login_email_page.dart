@@ -4,14 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shom_gn/consts/route_contants.dart';
+import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/providers/providers.dart';
-import 'package:shom_gn/responsive.dart';
 import 'package:shom_gn/services/my_app_functions.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/user_service.dart';
-import 'package:shom_gn/widgets/app/separator_widget.dart';
 import 'package:shom_gn/widgets/auth/auth_link_widget.dart';
 import 'package:shom_gn/widgets/auth/other_registration_widget.dart';
 import 'package:shom_gn/widgets/auth/validation_button.dart';
@@ -97,8 +96,6 @@ Future<void> _loginFct( ButtonInfo item) async {
       password: _passwordController.text.trim(),
     );
 
-   
-
     if (userCredential.user == null) {
       if (!mounted) return;
 
@@ -119,7 +116,6 @@ Future<void> _loginFct( ButtonInfo item) async {
     final currentUser = await userService.getByEmail(auth!.currentUser?.email! ?? '');
     if(currentUser == null) {
       if (!mounted) return;
-      print('User not found in database, signing out...');
        await userService.signOut();
       Fluttertoast.showToast(
         msg: l10n.error_login_message,
@@ -132,12 +128,6 @@ Future<void> _loginFct( ButtonInfo item) async {
       );
       return;
     }
-
-/*
-    await userService.initializeUserWithEmail(
-      auth!.currentUser!.email!,
-    ) as UserModel?;
-    */
 
     if (!mounted) return;
     ref.read(userProviderState).setUser(currentUser);
@@ -170,7 +160,6 @@ Future<void> _loginFct( ButtonInfo item) async {
   }
 }
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -189,6 +178,7 @@ Future<void> _loginFct( ButtonInfo item) async {
                   emailController: _emailController,
                   emailFocusNode: _emailFocusNode,
                 ),
+                SizedBox(height: WidgetConstants.sepWidgetHeight),
                 PasswordWidget(
                   passwordController: _passwordController,
                   passwordFocusNode: _passwordFocusNode,
@@ -199,13 +189,7 @@ Future<void> _loginFct( ButtonInfo item) async {
                     });
                   },
                 ),
-                Responsive.isDesktop(context)
-                    ? SeparatorWidget(height: 20)
-                    : SizedBox(),
                 AuthLinkWidget(),
-                Responsive.isDesktop(context)
-                    ? SeparatorWidget(height: 20)
-                    : SizedBox(),
 
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -216,6 +200,7 @@ Future<void> _loginFct( ButtonInfo item) async {
                       enabled: true,
                       routeName: RouteConstants.PROFILE_ROUTE,
                     ),
+                   icon: Icon(Icons.login , size: 24,),
                   ),
                 ),
                 OtherRegistrationWidget(),

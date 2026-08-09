@@ -22,10 +22,10 @@ class InputNameWidget extends StatelessWidget {
     return InputWidget(
       controller: nameController,
       focusNode: nameFocusNode,
-      icon: Icons.person,
+      prefixIcon: Icon(Icons.person),
       nextFocusNode: nextFocusNode,
       textInputType: TextInputType.name,
-      hinterText: hinterText!,
+      hintText: hinterText!,
       validator: (value) {
         return MyValidators.textNameValidator(value);
       }, onChange: (String value) {  },

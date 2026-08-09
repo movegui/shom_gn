@@ -13,7 +13,7 @@ class AppConstants {
     AssetsManager.banner2,
   ];
 
-  static const name = "MoveGui";
+  static const name = "Shom-GN";
   static const Adresse = "Ratoma";
   static const LOGIN_PHONE_MODE = 1;
   static const LONGIN_EMAIL_MODE = 2;
@@ -106,6 +106,8 @@ class ImageConstatnt {
 }
 
 
+
+/*
 class LoginConstatnts {
   String getLoginTitle() {
     return "Connectez-vous";
@@ -115,3 +117,4 @@ class LoginConstatnts {
     return "Enregistrez-vous";
   }
 }
+*/

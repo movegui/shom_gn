@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shom_gn/config/env_dev.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/services/form_services/form_service.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/seed_service.dart';
 import 'package:shom_gn/widgets/formsControllers/address_form_controller.dart';
 
-class AdressFormService  extends FormService<AdressModel,AddressFormController> {
+class AdressFormService  extends FormService<AddressModel,AddressFormController> {
   AdressFormService({required super.api});
 
   @override
-  Future<AddressFormController> getFormController(AdressModel? model) async {
+  Future<AddressFormController> getFormController(AddressModel? model) async {
             final adressForm = AddressFormController();
-        adressForm.setData(model ?? AdressModel.getDaulftObject());
+        adressForm.setData(model ?? AddressModel.getDaulftObject());
         if(model == null){
           adressForm.isRegisted = true;
         }
@@ -21,7 +21,7 @@ class AdressFormService  extends FormService<AdressModel,AddressFormController> 
   }
   
   @override
-  Future<List<AddressFormController>> getFormControllers(List<AdressModel?> adresses) async {
+  Future<List<AddressFormController>> getFormControllers(List<AddressModel?> adresses) async {
      List<AddressFormController> adressesForms = [];
     int size = adresses.length ?? 0;
     if (size > 0) {
@@ -44,13 +44,13 @@ class AdressFormService  extends FormService<AdressModel,AddressFormController> 
   }
   
   @override
-  Future<AdressModel> getModel(AddressFormController controller) async {
+  Future<AddressModel> getModel(AddressFormController controller) async {
      return await controller.getModel();
   }
   
   @override
-  Future<List<AdressModel>> getModels(List<AddressFormController> adressesForms) async {
-        List<AdressModel> adresses = [];
+  Future<List<AddressModel>> getModels(List<AddressFormController> adressesForms) async {
+        List<AddressModel> adresses = [];
     int size = adressesForms.length ?? 0;
     if (size > 0) {
       for (int i = 0; i < size; i++) {

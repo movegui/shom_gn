@@ -1,5 +1,22 @@
 class AssetsManager {
   static const String assetsIconsPath = "assets/icons";
+  static const String bannersImagesPath = "assets/images/banners";
+   static String imagesPath = "assets/images";
+
+
+  static const String logo = "$assetsIconsPath/shom-logo.jpg";
+
+    // Banners
+  static String banner1 = "$bannersImagesPath/banner1.png";
+  static String banner2 = "$bannersImagesPath/banner2.png";
+
+
+    static String warning = "$imagesPath/warning.png";
+  static String error = "$imagesPath/error.png";
+
+
+
+  /*
   static const String reservationIcon = "$assetsIconsPath/reservationFB.png";
   static const String reservationIcon2 = "$assetsIconsPath/Reservation.png";
   static const String reservationIcon3 = "$assetsIconsPath/appointment.png";
@@ -109,4 +126,5 @@ class AssetsManager {
 
   // beauty
   static String beauty = "$categoriesImagesPath/beauty.jpg";
+  */
 }

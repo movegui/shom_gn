@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shom_gn/consts/validator.dart';
+import 'package:shom_gn/consts/widget_constants.dart';
+import 'package:shom_gn/l10n/app_localizations.dart';
+import 'package:shom_gn/widgets/input/password_widget.dart';
 
 class RepeatPasswordWidget extends StatefulWidget {
   final TextEditingController passwordController, repeatPasswordController;
@@ -34,53 +36,28 @@ class RepeatPasswordWidgetState extends State<RepeatPasswordWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextFormField(
-          controller: widget.passwordController,
-          focusNode: widget.passwordFocusNode,
-          textInputAction: TextInputAction.next,
-          keyboardType: TextInputType.visiblePassword,
+        PasswordWidget(
+          passwordController: widget.passwordController,
+          passwordFocusNode: widget.passwordFocusNode,
           obscureText: obscureText,
-          decoration: InputDecoration(
-            hintText: "***********",
-            prefixIcon: const Icon(IconlyLight.lock),
-            suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  obscureText = !obscureText;
-                });
-              },
-              icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
-            ),
-          ),
-          onFieldSubmitted: (value) async {
-            FocusScope.of(context).requestFocus(widget.repeatPasswordFocusNode);
+          onPressObscur: () {
+            setState(() {
+              obscureText = !obscureText;
+            });
           },
-          validator: (value) {
-            return MyValidators.passwordValidator(value);
-          },
+          hintText: AppLocalizations.of(context)!.input_hint_password,
         ),
-        SizedBox(height: 8),
-        TextFormField(
-          controller: widget.repeatPasswordController,
-          focusNode: widget.repeatPasswordFocusNode,
-          textInputAction: TextInputAction.done,
-          keyboardType: TextInputType.visiblePassword,
+        SizedBox(height: WidgetConstants.sepWidgetHeight),
+        PasswordWidget(
+          passwordController: widget.repeatPasswordController,
+          passwordFocusNode: widget.repeatPasswordFocusNode,
           obscureText: obscureText,
-          decoration: InputDecoration(
-            hintText: "Repeter Mot de pass",
-            prefixIcon: const Icon(IconlyLight.lock),
-            suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {
-                  obscureText = !obscureText;
-                });
-              },
-              icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
-            ),
-          ),
-          onFieldSubmitted: (value) async {
-            //  await _registerFCT();
+          onPressObscur: () {
+            setState(() {
+              obscureText = !obscureText;
+            });
           },
+          hintText: AppLocalizations.of(context)!.input_hint_password_repeat,
           validator: (value) {
             return MyValidators.repeatPasswordValidator(
               value: value,

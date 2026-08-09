@@ -18,8 +18,8 @@ abstract class OrderFormController<
   final OM order;
   final pickupAddressForm = AddressFormController();
   final deliveryAdressForm = AddressFormController();
-  AdressModel? selectedPickupAdress;
-  AdressModel? selectedDeliveryAdress;
+  AddressModel? selectedPickupAdress;
+  AddressModel? selectedDeliveryAdress;
 
   OrderFormController({required this.order });
 
@@ -47,7 +47,7 @@ abstract class OrderFormController<
     if (size > 0) {
       for (int i = 0; i < size; i++) {
         final adressForm = AddressFormController();
-        adressForm.setData(adresses?[i] ?? AdressModel.getDaulftObject());
+        adressForm.setData(adresses?[i] ?? AddressModel.getDaulftObject());
         if(adresses?[i] != null){
           adressForm.isRegisted = true;
         }

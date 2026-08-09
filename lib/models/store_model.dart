@@ -2,7 +2,7 @@
 
 
 
-import 'package:shom_gn/models/adress_model.dart';
+import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/model.dart';
 import 'package:shom_gn/models/open_hours_model.dart';
 import 'package:shom_gn/models/user_model.dart';
@@ -10,7 +10,7 @@ import 'package:shom_gn/models/user_model.dart';
 abstract class StoreModel extends Model {
 
   final String  phone, email, imageUrl, description;
-  final AdressModel address; 
+  final AddressModel address; 
   final List<UserModel?>? staff;
   final List<OpenHoursModel> weeklyHours;
   final StoreTypeModel? storeType;

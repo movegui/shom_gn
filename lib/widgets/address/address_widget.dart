@@ -72,8 +72,8 @@ class AddressWidgetState extends State<AddressWidget> {
               child: InputWidget(
                 controller: widget.addressForm.address,
                 focusNode: widget.addressForm.addressFocusNode,
-                icon: Icons.home,
-                hinterText: AppLocalizations.of(context)!.input_hint_adress,
+                prefixIcon: Icon(Icons.home),
+                hintText: AppLocalizations.of(context)!.input_hint_adress,
                 isFullBorder: widget.isFullBorder,
                 validator: (vaule) {
                   return MyValidators.textNameValidator(vaule);
@@ -108,8 +108,8 @@ class AddressWidgetState extends State<AddressWidget> {
               child: InputWidget(
                 controller: widget.addressForm.district,
                 focusNode: widget.addressForm.districtFocus,
-                icon: Icons.home,
-                hinterText: AppLocalizations.of(context)!.input_hint_quartier,
+                prefixIcon: Icon(Icons.home),
+                hintText: AppLocalizations.of(context)!.input_hint_quartier,
                 isFullBorder: widget.isFullBorder,
                 validator: (vaule) {
                   return MyValidators.textNameValidator(vaule);
@@ -153,7 +153,7 @@ class AddressWidgetState extends State<AddressWidget> {
         enabled: widget.addressForm.isValid(),
         routeName: '',
       ),
-      icon: Icons.edit,
+      icon: Icon(Icons.edit),
     );
   }
 
@@ -191,7 +191,7 @@ class AddressWidgetState extends State<AddressWidget> {
         enabled: widget.addressForm.isValid(),
         routeName: '',
       ),
-      icon: Icons.delete,
+      icon: Icon(Icons.delete),
       //  textColor: Colors.red,
     );
   }

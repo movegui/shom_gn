@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shom_gn/consts/route_contants.dart';
 import 'package:shom_gn/consts/widget_constants.dart';
@@ -10,6 +10,7 @@ import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/models/opt_args_model.dart';
 import 'package:shom_gn/models/user_model.dart';
 import 'package:shom_gn/responsive.dart';
+import 'package:shom_gn/services/interfaces/i_user_service.dart';
 import 'package:shom_gn/services/my_app_functions.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/user_service.dart';
@@ -83,6 +84,7 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
 
           UserModel user = await userService.initializeUserWithPhone(
             _phoneNumberController.text,
+            UserRole.user
           );
           OptArgsModel args = OptArgsModel(
             verificationId: confirmationResult!.verificationId,
@@ -93,7 +95,7 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
         } else {
           userService.registerWithPhone(
             context,
-            userService.initializeUserWithPhone(_phoneNumberController.text)
+            userService.initializeUserWithPhone(_phoneNumberController.text , UserRole.user)
                 as UserModel,
           );
         }
@@ -133,7 +135,7 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
                 ),
                 AuthLinkWidget(),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(2.0),
                   child: ValidationButton(
                     fn: _loginFct,
                     buttonItem: ButtonInfo(
@@ -141,7 +143,7 @@ class LoginPhoneNumberPageState extends State<LoginPhoneNumberPage> {
                      enabled:  true,
                       routeName: RouteConstants.OTP_SCREEN_ROUTE,
                     ),
-                    icon: IconlyLight.send,
+                    icon: Icon(Icons.login , size: 24,),
                   ),
                 ),
                 OtherRegistrationWidget(),

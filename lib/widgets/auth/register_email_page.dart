@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shom_gn/consts/route_contants.dart';
-import 'package:shom_gn/consts/validator.dart';
 import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
@@ -17,6 +15,7 @@ import 'package:shom_gn/widgets/app/separator_widget.dart';
 import 'package:shom_gn/widgets/auth/other_registration_widget.dart';
 import 'package:shom_gn/widgets/auth/repeat_password_widget.dart';
 import 'package:shom_gn/widgets/auth/validation_button.dart';
+import 'package:shom_gn/widgets/input/input_email_widget.dart';
 
 class RegisterEmailPage extends StatefulWidget {
   const RegisterEmailPage({super.key});
@@ -54,10 +53,9 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
     } catch (e) {
       MyAppFunctions.showErrorOrWarningDialog(
         context: context,
-        subtitle:
-            AppLocalizations.of(
-              context,
-            )!.error_firebase_initialisation.toString(),
+        subtitle: AppLocalizations.of(
+          context,
+        )!.error_firebase_initialisation.toString(),
         fct: () {},
       );
     }
@@ -77,7 +75,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
     super.dispose();
   }
 
-  Future<void> _registerFCT( ButtonInfo item) async {
+  Future<void> _registerFCT(BuildContext context, ButtonInfo item) async {
     final isValid = _formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
 
@@ -90,11 +88,14 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           _emailController.text.trim(),
         );
 
+        print('Initialized user: ${initUser.username ?? 'No username'}');
+
         UserModel? createUser = await userService.registerWithEmail(
           context,
           initUser,
           _passwordController.text.trim(),
         );
+        print('User created: ${createUser?.username ?? 'No username'}');
         context.push(item.routeName!, extra: createUser);
         Fluttertoast.showToast(
           msg: AppLocalizations.of(context)!.success_registration_new_user,
@@ -106,6 +107,7 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
           fontSize: 16.0,
         );
       } catch (error) {
+        print('Error during registration: $error');
         MyAppFunctions.showErrorOrWarningDialog(
           context: context,
           subtitle: error.toString(),
@@ -124,23 +126,11 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
-            controller: _emailController,
-            focusNode: _emailFocusNode,
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.input_hint_adress_email,
-              prefixIcon: const Icon(IconlyLight.message),
-            ),
-            onFieldSubmitted: (value) {
-              FocusScope.of(context).requestFocus(_passwordFocusNode);
-            },
-            validator: (value) {
-              return MyValidators.emailValidator(value);
-            },
+          InputEmailWidget(
+            nextFocusNode: _passwordFocusNode,
+            emailController: _emailController,
+            emailFocusNode: _emailFocusNode,
           ),
-
           const SizedBox(height: 8.0),
           RepeatPasswordWidget(
             passwordController: _passwordController,
@@ -148,23 +138,20 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
             passwordFocusNode: _passwordFocusNode,
             repeatPasswordFocusNode: _repeatPasswordFocusNode,
           ),
-          Responsive.isDesktop(context)
-              ? SeparatorWidget(height: 20)
-              : SizedBox(),
           Padding(
             padding: const EdgeInsets.all(WidgetConstants.sepWidget),
             child: ValidationButton(
-              fn: _registerFCT,
+              fn: (item) async {
+                await _registerFCT(context, item);
+              },
               buttonItem: ButtonInfo(
-               title:  AppLocalizations.of(context)!.btn_register_label,
-               enabled:  true,
+                title: AppLocalizations.of(context)!.btn_register_label,
+                enabled: true,
                 routeName: RouteConstants.PROFILE_ROUTE,
               ),
+              icon: Icon(Icons.person),
             ),
           ),
-          Responsive.isDesktop(context)
-              ? SeparatorWidget(height: 20)
-              : SizedBox(),
           OtherRegistrationWidget(),
         ],
       ),

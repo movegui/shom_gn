@@ -9,7 +9,7 @@ class BtnRegisterCancelWidget extends StatelessWidget {
   final Future<void> Function(ButtonInfo item) actionFCT;
   final Future<void> Function(ButtonInfo item) cancelFCT;
   final String? actionTitle;
-  final IconData? icon;
+  final Widget? icon;
   final String? actionRouteName;
   final String? cancelRouteName;
   final bool? actionEnabled;
@@ -18,7 +18,7 @@ class BtnRegisterCancelWidget extends StatelessWidget {
     required this.actionFCT,
     required this.cancelFCT,
      this.actionTitle,
-     this.icon = Icons.save,
+     this.icon ,
      this.actionRouteName = '',
      this.cancelRouteName = '',
      this.actionEnabled = true
@@ -38,7 +38,7 @@ class BtnRegisterCancelWidget extends StatelessWidget {
               enabled: actionEnabled ??  true,
               routeName: actionRouteName ?? '',
             ),
-            icon: icon,
+            icon: icon ?? Icon(Icons.save),
           ),
         ),
         SizedBox(width: WidgetConstants.sepWidgetHeight),
@@ -50,7 +50,7 @@ class BtnRegisterCancelWidget extends StatelessWidget {
               enabled: true,
               routeName: '',
             ),
-            icon: Icons.cancel_outlined,
+            icon: Icon(Icons.cancel_outlined),
           ),
         ),
       ],
