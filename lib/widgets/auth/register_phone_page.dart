@@ -5,12 +5,9 @@ import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/models/user_model.dart';
-import 'package:shom_gn/responsive.dart';
 import 'package:shom_gn/services/interfaces/i_user_service.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/user_service.dart';
-import 'package:shom_gn/widgets/app/separator_widget.dart';
-import 'package:shom_gn/widgets/auth/other_registration_widget.dart';
 import 'package:shom_gn/widgets/auth/validation_button.dart';
 import 'package:shom_gn/widgets/input/input_phone_widget.dart';
 
@@ -88,7 +85,6 @@ class RegisterPhonePageState extends State<RegisterPhonePage> {
                   icon: Icon(Icons.person, size: 24,),
                 ),
               ),
-              OtherRegistrationWidget(),
             ],
           ),
         ),

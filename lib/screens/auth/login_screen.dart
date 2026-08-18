@@ -11,7 +11,6 @@ import 'package:shom_gn/widgets/app/app_panel_web.dart';
 import 'package:shom_gn/widgets/app/separator_widget.dart';
 import 'package:shom_gn/widgets/auth/login_email_page.dart';
 import 'package:shom_gn/widgets/auth/login_phone_page.dart';
-import 'package:shom_gn/widgets/input/subtitle_text.dart';
 import 'package:shom_gn/widgets/util/toogle_buttons.dart';
 import 'package:shom_gn/widgets/web/web_appbar.dart';
 
@@ -74,38 +73,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with RouteAware {
         currentLoginScreen == 0 ? LoginPhoneNumberPage() : LoginEmailPage(),
       ],
     );
-
-    /*
-    return Center(
-      child: Card(
-        elevation: 6,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SeparatorWidget(),
-                  PlatformWidget.isAndroid(context) ||
-                          PlatformWidget.isIos(context) ||
-                          PlatformWidget.isWeb(context)
-                      ? ToggleButtonExample(onStateChanged: updateState)
-                      : const SizedBox(),
-                  SizedBox(height: 6.0),
-                  currentLoginScreen == 0
-                      ? LoginPhoneNumberPage()
-                      : LoginEmailPage(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    */
   }
 
   Widget buildDeskop() {
@@ -119,99 +86,5 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with RouteAware {
       subtitle: 'Connectez-vous à votre compte',
       title: AppLocalizations.of(context)!.login_title,
     );
-    /*
-    return Center(
-      child: Container(
-        width: 700,
-        //   height: 700,
-        decoration: BoxDecoration(
-          border: Border.all(width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(13),
-                      topRight: Radius.circular(13),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 6,
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 80,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              // Logo à gauche
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.asset(
-                                    'assets/icons/shom-logo.jpg',
-                                    width: 60,
-                                    height: 60,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-
-                              // Titre centré
-                              Column(
-                                children: [
-                                  Center(
-                                    child: SubtitleTextWidget(
-                                      label: AppLocalizations.of(
-                                        context,
-                                      )!.login_title,
-                                      fontSize:
-                                          WidgetConstants.subTitleFontSize * 2,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    'Connectez-vous à votre compte',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(color: Colors.white70),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 1.5),
-                ToggleButtonExample(onStateChanged: updateState),
-                SeparatorWidget(height: WidgetConstants.sepWidgetHeight * 1.5),
-                currentLoginScreen == 0
-                    ? LoginPhoneNumberPage()
-                    : LoginEmailPage(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-    */
   }
 }

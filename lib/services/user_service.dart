@@ -14,10 +14,11 @@ import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/opt_args_model.dart';
 import 'package:shom_gn/models/person_model.dart';
 import 'package:shom_gn/models/user_model.dart';
+import 'package:shom_gn/my_platform.dart';
 import 'package:shom_gn/providers/providers.dart';
-import 'package:shom_gn/screens/auth/otp_verification_screen.dart';
 import 'package:shom_gn/services/interfaces/i_user_service.dart';
 import 'package:shom_gn/services/model_service.dart';
+import 'package:shom_gn/services/my_app_functions.dart';
 import 'package:shom_gn/widgets/error/message_widget.dart';
 
 import 'package:uuid/uuid.dart';
@@ -119,7 +120,35 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
   @override
   Future<UserModel?> registerWithGoogle(BuildContext context) async {
+    User? firebaseUser;
     try {
+      if (MyPlatform.getCurrentPlatform() == PlatformEnum.web) {
+        final provider = GoogleAuthProvider();
+        provider.setCustomParameters({'prompt': 'select_account'});
+        final userCredential = await FirebaseAuth.instance.signInWithPopup(
+          provider,
+        );
+        firebaseUser = userCredential.user;
+      } else if (MyPlatform.getCurrentPlatform() == PlatformEnum.sdk) {
+        final GoogleSignIn googleSignIn = GoogleSignIn();
+        final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+        if (googleUser == null) {
+          return null; // User cancelled sign-in
+        }
+
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        final UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithCredential(credential);
+        firebaseUser = userCredential.user;
+      }
+
+      /*
       final GoogleSignIn googleSignIn =
           kIsWeb && _googleSignInClientId.isNotEmpty
           ? GoogleSignIn(clientId: _googleSignInClientId)
@@ -127,12 +156,13 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
+        print("is null");
         return null; // User cancelled sign-in
       }
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-
+      print('im here');
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -142,12 +172,21 @@ class UserService extends ModelService<UserModel> implements IUserService {
           .signInWithCredential(credential);
       final User? firebaseUser = userCredential.user;
 
+      */ /*
+        final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
+          */
+
       if (firebaseUser == null) {
-        throw Exception("Firebase user is null");
+        MyAppFunctions.showErrorOrWarningDialog(
+          context: context,
+          subtitle: "No Firebase User !!!",
+          fct: () {},
+        );
       }
 
       // Check if user exists in Firestore
-      UserModel? existingUser = await getByEmail(firebaseUser.email ?? '');
+      UserModel? existingUser = await getByEmail(firebaseUser?.email ?? '');
 
       if (existingUser != null) {
         return existingUser;
@@ -155,27 +194,22 @@ class UserService extends ModelService<UserModel> implements IUserService {
 
       // Create new user if doesn't exist
       final UserModel newUser = await initializeUserWithAuthenticateUser(
-        firebaseUser,
+        firebaseUser!,
       );
 
       await addModel(newUser);
       return newUser;
     } on FirebaseException catch (e) {
-      print(e.message);
-      MessageWidget.errorMessage(
-        context,
-        AppLocalizations.of(context)!.error_register_with_phone_title,
-        'Google Sign-In Error: ${e.message}',
-        const Icon(Icons.error, color: AppColors.error),
-        FlushbarPosition.TOP,
+      MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subtitle: e.toString(),
+        fct: () {},
       );
     } catch (e) {
-      MessageWidget.errorMessage(
-        context,
-        AppLocalizations.of(context)!.error_register_with_phone_title,
-        'Error: $e',
-        const Icon(Icons.error, color: AppColors.error),
-        FlushbarPosition.TOP,
+      MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subtitle: e.toString(),
+        fct: () {},
       );
     }
     return null;
@@ -229,21 +263,17 @@ class UserService extends ModelService<UserModel> implements IUserService {
       return newUser;
     } on FirebaseException catch (e) {
       print(e.message);
-      MessageWidget.errorMessage(
-        context,
-        AppLocalizations.of(context)!.error_register_with_phone_title,
-        'Facebook Sign-In Error: ${e.message}',
-        const Icon(Icons.error, color: AppColors.error),
-        FlushbarPosition.TOP,
+      MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subtitle: e.toString(),
+        fct: () {},
       );
     } catch (e) {
       print(e);
-      MessageWidget.errorMessage(
-        context,
-        AppLocalizations.of(context)!.error_register_with_phone_title,
-        'Error: $e',
-        const Icon(Icons.error, color: AppColors.error),
-        FlushbarPosition.TOP,
+       MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subtitle: e.toString(),
+        fct: () {},
       );
     }
     return null;
@@ -263,7 +293,7 @@ class UserService extends ModelService<UserModel> implements IUserService {
       if (!context.mounted) return;
       print('je suis la ');
       context.push(RouteConstants.OTP_SCREEN_ROUTE, extra: args);
-    /*  
+      /*  
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -275,7 +305,6 @@ class UserService extends ModelService<UserModel> implements IUserService {
         ),
       );
       */
-      
 
       return;
     }
@@ -295,10 +324,9 @@ class UserService extends ModelService<UserModel> implements IUserService {
           confirmationResult: null,
         );
         if (!context.mounted) return;
-          context.push(RouteConstants.OTP_SCREEN_ROUTE, extra: args);
-   
+        context.push(RouteConstants.OTP_SCREEN_ROUTE, extra: args);
 
-      /*  
+        /*  
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -309,7 +337,6 @@ class UserService extends ModelService<UserModel> implements IUserService {
           ),
         );
         */
-        
       },
       codeAutoRetrievalTimeout: (_) {},
     );

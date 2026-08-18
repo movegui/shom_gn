@@ -107,6 +107,18 @@ abstract class AppLocalizations {
   /// **'No Email'**
   String get no_email;
 
+  /// No description provided for @no_orders.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping Cart is empty'**
+  String get no_orders;
+
+  /// No description provided for @no_trips.
+  ///
+  /// In en, this message translates to:
+  /// **'No Trip Available'**
+  String get no_trips;
+
   /// No description provided for @status_actf.
   ///
   /// In en, this message translates to:
@@ -1348,6 +1360,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OTP Verification '**
   String get opt_screen_title;
+
+  /// No description provided for @dashbord_sentence_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Where would you like to travel to ?'**
+  String get dashbord_sentence_1;
+
+  /// No description provided for @services_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get services_title;
+
+  /// No description provided for @hotels_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotels'**
+  String get hotels_title;
+
+  /// No description provided for @favoris_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Favoris'**
+  String get favoris_title;
+
+  /// No description provided for @destinations_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular destinations'**
+  String get destinations_title;
+
+  /// No description provided for @read_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Read All'**
+  String get read_all;
+
+  /// No description provided for @shopping_cart_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping Cart'**
+  String get shopping_cart_title;
+
+  /// No description provided for @language_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language_title;
+
+  /// No description provided for @help_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get help_title;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

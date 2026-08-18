@@ -32,4 +32,4 @@ abstract class OrderModel<M extends UserModel , T extends OrderItemModel> extend
   };
 }
 
-enum OrderStatus { Pending, in_progress, Delivered, Completed, Picked , Ordered}
+enum OrderStatus { pending, inProgress, delivered, completed, picked , ordered}

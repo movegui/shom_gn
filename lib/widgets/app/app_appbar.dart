@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shom_gn/consts/app_colors.dart';
 import 'package:shom_gn/consts/route_contants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
-import 'package:shom_gn/providers/providers.dart';
-import 'package:shom_gn/widgets/app/app_route_observer.dart';
 
 class AppAppbar extends ConsumerStatefulWidget implements PreferredSizeWidget {
-  const AppAppbar({ required this.title, super.key, this.itemCount});
+  const AppAppbar({required this.title, super.key, this.itemCount});
   final int? itemCount;
-   final String title ;
+  final String title;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => AppAppbarState();
@@ -18,18 +17,18 @@ class AppAppbar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-class AppAppbarState extends ConsumerState<AppAppbar>  {
-
-
+class AppAppbarState extends ConsumerState<AppAppbar> {
   @override
   Widget build(BuildContext context) {
- //   title = ref.watch(appbarTitleProviderState).title;
     final buttonStyle = Theme.of(context).iconButtonTheme.style;
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.primary,
       foregroundColor: Theme.of(context).colorScheme.onPrimary,
       title: Center(
-        child: Text(widget.title, style: Theme.of(context).textTheme.headlineMedium),
+        child: Text(
+          widget.title,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
       titleTextStyle: TextStyle(fontSize: 20),
       leading: Builder(
@@ -48,7 +47,7 @@ class AppAppbarState extends ConsumerState<AppAppbar>  {
           final hasDrawer = scaffold?.widget.drawer != null;
           if (hasDrawer) {
             return IconButton(
-              icon: const Icon(Icons.menu, color: Colors.white),
+              icon: const Icon(Icons.menu),
               tooltip: AppLocalizations.of(context)!.navigation_menu_tooltip,
               onPressed: () => scaffold?.openDrawer(),
             );
@@ -75,14 +74,19 @@ class AppAppbarState extends ConsumerState<AppAppbar>  {
               style: buttonStyle,
             ),
             Positioned(
-              right: 6,
-              top: 6,
+              right: 2,
+              top: 2,
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(shape: BoxShape.circle),
                 child: Text(
                   '${widget.itemCount}',
-                  style: const TextStyle(fontSize: 10),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    color: AppColors.error,
+                 //   backgroundColor: AppColors.primary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

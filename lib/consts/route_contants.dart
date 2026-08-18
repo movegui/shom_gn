@@ -8,19 +8,17 @@ class RouteConstants {
   static const PROFILE_ROUTE = '/profile';
   static const HOME_ROUTE = '/home';
   static const ORDERS_ROUTE = '/orders';
-  static const DELIVERIES_ROUTE = '/deliveries';
-  static const PRESSING_ROUTE = '/pressing';
-  static const PRESSING_DETAILS_ROUTE = '/pressingDetail';
   static const OTP_SCREEN_ROUTE = '/otp';
-  static const PATRY_ROUTE = '/pastry';
-  static const RESTAURANT_ROUTE = '/restaurant';
-  static const SUPER_MARKT_ROUTE = '/super_markt';
   static const SEARCH_ROUTE = '/search';
-  static const SHOPPING_ROUTE = '/shopping';
   static const CHECKOUT_ROUTE = '/checkout';
   static const ORDER_DETAIL_ROUTE = '/orderDetail';
-  static const DELIVERY_DETAIL_ROUTE = '/deliveryDetail';
   static const NOTIFICATIONS_ROUTE = '/notifications';
-  static const MOVEGUI_ROUTE = '/movegui';
   static const ACCOUNT_ROUTE = '/account';
+  static const SEARCH_FLIGHT_ROUTE = '/flight';
+  static const SEARCH_HOTEL_ROUTE = '/hotel';
+  static const SEARCH_MY_TRIPS_ROUTE = '/trips';
+  static const FAVORITES_ROUTE = '/trips';
+  static const SHOPPING_ROUTE = '/shopping';
+  static const SETTINGS_ROUTE = "/settings";
+  static const HELP_ROUTE = "/settings";
 }

@@ -34,12 +34,7 @@ class OtherRegistrationWidget extends StatelessWidget {
                     const Expanded(child: Divider(thickness: 1)),
                   ],
                 ),
-           //   ),
-/*
-              Responsive.isDesktop(context)
-                  ? SeparatorWidget(height: 20)
-                  : SizedBox(),
-                  */
+
               SizedBox(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

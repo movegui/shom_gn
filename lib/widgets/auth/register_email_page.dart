@@ -7,12 +7,9 @@ import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
 import 'package:shom_gn/models/user_model.dart';
-import 'package:shom_gn/responsive.dart';
 import 'package:shom_gn/services/my_app_functions.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/user_service.dart';
-import 'package:shom_gn/widgets/app/separator_widget.dart';
-import 'package:shom_gn/widgets/auth/other_registration_widget.dart';
 import 'package:shom_gn/widgets/auth/repeat_password_widget.dart';
 import 'package:shom_gn/widgets/auth/validation_button.dart';
 import 'package:shom_gn/widgets/input/input_email_widget.dart';
@@ -152,7 +149,6 @@ class RegisterEmailPageState extends State<RegisterEmailPage> {
               icon: Icon(Icons.person),
             ),
           ),
-          OtherRegistrationWidget(),
         ],
       ),
     );

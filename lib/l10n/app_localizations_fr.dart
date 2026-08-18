@@ -15,6 +15,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get no_email => 'Pas d\'Email';
 
   @override
+  String get no_orders => 'Votre Panier est Vide';
+
+  @override
+  String get no_trips => 'Aucun Voyages disponible';
+
+  @override
   String get status_actf => 'Actif';
 
   @override
@@ -634,4 +640,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get opt_screen_title => 'Verification OTP';
+
+  @override
+  String get dashbord_sentence_1 => 'Où souhaitez-vous voyager ?';
+
+  @override
+  String get services_title => 'Services';
+
+  @override
+  String get hotels_title => 'Hôtels';
+
+  @override
+  String get favoris_title => 'Favoris';
+
+  @override
+  String get destinations_title => 'Destinations populaires';
+
+  @override
+  String get read_all => 'Tout lire';
+
+  @override
+  String get shopping_cart_title => 'panier';
+
+  @override
+  String get language_title => 'Langue';
+
+  @override
+  String get help_title => 'Aide';
 }

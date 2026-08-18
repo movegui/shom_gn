@@ -1,6 +1,9 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shom_gn/consts/app_colors.dart';
+import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
+import 'package:shom_gn/widgets/error/message_widget.dart';
 
 class ButtonWidget extends StatelessWidget {
   final ButtonInfo buttonItem;
@@ -27,26 +30,44 @@ class ButtonWidget extends StatelessWidget {
         ),
         backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.hovered)) {
-            return AppColors.selectionColor; // hover color
+            return buttonItem.enabled
+                ? AppColors.selectionColor
+                : AppColors.disabled; // hover color
           }
           if (states.contains(WidgetState.pressed)) {
-            return AppColors.selectionColor;
+            return buttonItem.enabled
+                ? AppColors.selectionColor
+                : AppColors.disabled;
           }
-          return buttonStyle?.backgroundColor?.resolve({}) ??
-              AppColors.disabled;
+          return buttonItem.enabled
+              ? (buttonStyle?.backgroundColor?.resolve({}) ??
+                    AppColors.disabled)
+              : AppColors.disabled;
         }),
         foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.hovered)) {
-            return AppColors.primary;
+            return buttonItem.enabled ? AppColors.primary : AppColors.disabled;
           }
-          return buttonStyle?.foregroundColor?.resolve({}) ??
-              AppColors.disabled;
+          return buttonItem.enabled
+              ? (buttonStyle?.backgroundColor?.resolve({}) ??
+                    AppColors.disabled)
+              : AppColors.disabled;
         }),
       ),
       icon: icon ?? const SizedBox(),
       label: Text(buttonItem.title ?? '', style: textStyle),
       onPressed: () async {
-        await onPressed(buttonItem);
+        if (buttonItem.enabled) {
+          await onPressed(buttonItem);
+        } else {
+          MessageWidget.errorMessage(
+            context,
+            AppLocalizations.of(context)!.deactivate_button_title,
+            AppLocalizations.of(context)!.deactivate_button_message,
+            Icon(Icons.error, color: AppColors.error),
+            FlushbarPosition.TOP,
+          );
+        }
       },
     );
   }

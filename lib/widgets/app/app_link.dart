@@ -6,7 +6,6 @@ import 'package:shom_gn/consts/app_colors.dart';
 import 'package:shom_gn/consts/route_contants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
-import 'package:shom_gn/providers/providers.dart';
 import 'package:shom_gn/widgets/error/message_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 

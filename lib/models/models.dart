@@ -1,11 +1,11 @@
 export 'airline.dart';
 export 'airport.dart';
 export 'api_response.dart';
-export 'booking.dart';
+export 'booking_model.dart';
 export 'exceptions.dart';
 export 'flight.dart';
 export 'hotel.dart';
-export 'passenger.dart';
+export 'passenger_model.dart';
 export 'price.dart';
 export 'search_criteria.dart';
 export 'user.dart';

@@ -2,12 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shom_gn/consts/route_contants.dart';
 import 'package:shom_gn/consts/widget_constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/models/button_info.dart';
-import 'package:shom_gn/providers/providers.dart';
 import 'package:shom_gn/services/my_app_functions.dart';
 import 'package:shom_gn/services/register_services.dart';
 import 'package:shom_gn/services/user_service.dart';
@@ -109,30 +107,8 @@ Future<void> _loginFct( ButtonInfo item) async {
         fontSize: 16.0,
       );
       return;
-    }
-      if(!mounted) return;
-     await userService.checkLoginState(l10n.error_login_user_not_found);
-    
-    final currentUser = await userService.getByEmail(auth!.currentUser?.email! ?? '');
-    if(currentUser == null) {
-      if (!mounted) return;
-       await userService.signOut();
-      Fluttertoast.showToast(
-        msg: l10n.error_login_message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      return;
-    }
-
-    if (!mounted) return;
-    ref.read(userProviderState).setUser(currentUser);
-
-    Fluttertoast.showToast(
+    } else {
+          Fluttertoast.showToast(
       msg: l10n.success_login_message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
@@ -141,8 +117,8 @@ Future<void> _loginFct( ButtonInfo item) async {
       textColor: Colors.white,
       fontSize: 16.0,
     );
+    }
 
-    context.go(item.routeName!);
   } on FirebaseAuthException catch (e) {
     if (!mounted) return;
 

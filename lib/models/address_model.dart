@@ -1,4 +1,3 @@
-
 import 'package:shom_gn/models/geo_cordinates_model.dart';
 import 'package:shom_gn/models/model.dart';
 import 'package:uuid/uuid.dart';
@@ -24,9 +23,9 @@ class AddressModel extends Model {
     required this.district,
     required this.minucipality,
     required this.adressType,
-    this.zipCode = 00000,
-    this.ville = 'Conakry',
-    this.pays = 'Guinee',
+    this.zipCode,
+    this.ville,
+    this.pays,
     this.isDefault = false,
   });
 
@@ -48,12 +47,12 @@ class AddressModel extends Model {
   factory AddressModel.fromJson(Map<String, dynamic> json) => AddressModel(
     id: json['id'] ?? '',
     name: json['name'] ?? '',
-    createdAt:
-        json['createdAt'] != null ? json['createdAt'].toDate() : DateTime.now(),
-    geoCordinates:
-        json['geoCordinates'] != null
-            ? GeoCordinatesModel.fromJson(json['geoCordinates'])
-            : null,
+    createdAt: json['createdAt'] != null
+        ? json['createdAt'].toDate()
+        : DateTime.now(),
+    geoCordinates: json['geoCordinates'] != null
+        ? GeoCordinatesModel.fromJson(json['geoCordinates'])
+        : null,
     address: json['address'] ?? '',
     district: json['district'] ?? '',
     minucipality: json['minucipality'] ?? 'di',

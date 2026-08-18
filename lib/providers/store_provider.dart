@@ -1,7 +1,7 @@
 
-/*
 import 'package:flutter/material.dart';
-import 'package:movegui/models/store/store_model.dart';
+import 'package:shom_gn/models/store_model.dart';
+
 
 class StoreProvider extends ChangeNotifier {
   StoreModel? _store;
@@ -38,5 +38,4 @@ class StoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
-*/
 

@@ -1,53 +1,197 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shom_gn/consts/app_colors.dart';
 import 'package:shom_gn/consts/route_contants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
+import 'package:shom_gn/models/button_info.dart';
+import 'package:shom_gn/providers/providers.dart';
 import 'package:shom_gn/widgets/menu/menu_item_widget.dart';
 
-
-class MyMenu extends StatelessWidget {
+class MyMenu extends ConsumerWidget {
   const MyMenu({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(userProviderState).user;
+    if (currentUser == null) {
+      return const SizedBox.shrink();
+    }
+
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(color: Color(0xFF871A1C)),
-            child: Center(
-              child: Text(
-                'MoveGui',
-                style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
+      child: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              color: Theme.of(context).colorScheme.primary,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(radius: 28, child: Icon(Icons.person, size: 30)),
+                  SizedBox(height: 12),
+                  Text(
+                    currentUser.personModel!.name.isEmpty
+                        ? "No Name"
+                        : "Shom_GN",
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                  Text(
+                    currentUser.personModel?.email ?? "shom_gn@email.com",
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          ListTile(
-            title: MenuItemWidget(
-              title: AppLocalizations.of(context)!.home_title,
-              route: RouteConstants.HOME_ROUTE,
+
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.all(12),
+                children: [
+                  HoverListTile(
+                    icon: Icons.home_outlined,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.home_title,
+                      enabled: true,
+                      routeName: RouteConstants.HOME_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.flight_takeoff,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.search_flight_title,
+                      enabled: true,
+                      routeName: RouteConstants.SEARCH_FLIGHT_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.hotel_outlined,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.hotels_title,
+                      enabled: false,
+                      routeName: RouteConstants.SEARCH_HOTEL_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.book_online_outlined,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.my_trips,
+                      enabled: false,
+                      routeName: RouteConstants.SEARCH_MY_TRIPS_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.favorite_border,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.favoris_title,
+                      enabled: false,
+                      routeName: RouteConstants.FAVORITES_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.shopping_cart_outlined,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.shopping_cart_title,
+                      enabled: false,
+                      routeName: RouteConstants.FAVORITES_ROUTE,
+                    ),
+                  ),
+
+                  const Divider(),
+
+                  HoverListTile(
+                    icon: Icons.person_outline,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.my_profile_title,
+                      enabled: false,
+                      routeName: RouteConstants.PROFILE_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.notifications_none,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(
+                        context,
+                      )!.profile_menu_notification,
+                      enabled: false,
+                      routeName: RouteConstants.NOTIFICATIONS_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.language_outlined,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.language_title,
+                      enabled: false,
+                      routeName: RouteConstants.NOTIFICATIONS_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.help_outline,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.help_title,
+                      enabled: false,
+                      routeName: RouteConstants.HELP_ROUTE,
+                    ),
+                  ),
+
+                  HoverListTile(
+                    icon: Icons.settings_outlined,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.settings_title,
+                      enabled: false,
+                      routeName: RouteConstants.SETTINGS_ROUTE,
+                    ),
+                  ),
+
+                  const Divider(),
+
+                  HoverListTile(
+                    icon: Icons.logout,
+                    item: ButtonInfo(
+                      title: AppLocalizations.of(context)!.profile_menu_logout,
+                      enabled: true,
+                      routeName: '',
+                    ),
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                    },
+                    color: AppColors.error,
+                  ),
+                ],
+              ),
             ),
-          ),
-          ListTile(
-            title: MenuItemWidget(
-              title: AppLocalizations.of(context)!.command_title,
-              route: RouteConstants.ORDERS_ROUTE,
-            ),
-          ),
-          ListTile(
-            title: MenuItemWidget(
-              title: AppLocalizations.of(context)!.delivery_title,
-              route: RouteConstants.DELIVERIES_ROUTE,
-            ),
-          ),
-          ListTile(
-            title: MenuItemWidget(
-              title: AppLocalizations.of(context)!.movegui_title,
-              route: RouteConstants.MOVEGUI_ROUTE,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _drawerItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+    Color? color,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: color ?? AppColors.primary),
+      title: Text(
+        title,
+        style: TextStyle(color: color, fontWeight: FontWeight.w500),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      onTap: onTap,
     );
   }
 }

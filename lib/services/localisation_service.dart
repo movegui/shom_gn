@@ -8,7 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shom_gn/models/address_model.dart';
 import 'package:shom_gn/models/geo_cordinates_model.dart';
-import 'package:shom_gn/movegui_platform.dart';
+import 'package:shom_gn/my_platform.dart';
 import 'package:shom_gn/services/api_service.dart';
 
 import 'package:uuid/uuid.dart';
@@ -46,7 +46,7 @@ class LocalisationService {
       return null;
     }
 
-    if (MoveguiPlatform.getCurrentPlatform() == MoveGuiPlatformEnum.SDK &&
+    if (MyPlatform.getCurrentPlatform() == PlatformEnum.sdk &&
         Platform.isAndroid) {
       final AndroidSettings androidSettings = AndroidSettings(
         accuracy: LocationAccuracy.high,
@@ -56,7 +56,7 @@ class LocalisationService {
       return Geolocator.getCurrentPosition(locationSettings: androidSettings);
     }
 
-    if (MoveguiPlatform.getCurrentPlatform() == MoveGuiPlatformEnum.SDK &&
+    if (MyPlatform.getCurrentPlatform() == PlatformEnum.sdk &&
         Platform.isIOS) {
       final AppleSettings appleSettings = AppleSettings(
         accuracy: LocationAccuracy.high,

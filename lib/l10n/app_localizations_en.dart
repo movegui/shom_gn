@@ -15,6 +15,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_email => 'No Email';
 
   @override
+  String get no_orders => 'Shopping Cart is empty';
+
+  @override
+  String get no_trips => 'No Trip Available';
+
+  @override
   String get status_actf => 'Active';
 
   @override
@@ -634,4 +640,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get opt_screen_title => 'OTP Verification ';
+
+  @override
+  String get dashbord_sentence_1 => 'Where would you like to travel to ?';
+
+  @override
+  String get services_title => 'Services';
+
+  @override
+  String get hotels_title => 'Hotels';
+
+  @override
+  String get favoris_title => 'Favoris';
+
+  @override
+  String get destinations_title => 'Popular destinations';
+
+  @override
+  String get read_all => 'Read All';
+
+  @override
+  String get shopping_cart_title => 'Shopping Cart';
+
+  @override
+  String get language_title => 'Language';
+
+  @override
+  String get help_title => 'Help';
 }
