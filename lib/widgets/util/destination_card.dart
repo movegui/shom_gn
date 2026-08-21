@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shom_gn/consts/app_colors.dart';
+import 'package:shom_gn/responsive.dart';
 
 class DestinationCard extends StatelessWidget {
   final String city;
@@ -7,6 +8,7 @@ class DestinationCard extends StatelessWidget {
   final String imageUrl;
   final double price;
   final VoidCallback? onTap;
+  final Color? color;
 
   const DestinationCard({
     super.key,
@@ -15,6 +17,7 @@ class DestinationCard extends StatelessWidget {
     required this.imageUrl,
     required this.price,
     this.onTap,
+    this.color,
   });
 
   @override
@@ -23,8 +26,7 @@ class DestinationCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Container(
-    //    width: double.infinity,
-        height: 00,
+        //    width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.white,
@@ -45,12 +47,11 @@ class DestinationCard extends StatelessWidget {
                 top: Radius.circular(20),
               ),
               child: SizedBox(
-                height: 150,
+                height: Responsive.isDesktop(context) ? 180 : 120,
                 width: double.infinity,
                 child: Image.network(imageUrl, fit: BoxFit.cover),
               ),
             ),
-
 
             Padding(
               padding: const EdgeInsets.all(6),
@@ -64,28 +65,27 @@ class DestinationCard extends StatelessWidget {
                         size: 16,
                         color: Colors.red,
                       ),
-                      SizedBox(width: 6,),
+                      SizedBox(width: 6),
                       Text(
                         city,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                          color: color ?? AppColors.primary,
                         ),
                       ),
                     ],
                   ),
                   Text(
-                      "À partir de ${price.toStringAsFixed(0)} €",
-                      style: TextStyle(
-                        color: Colors.blue.shade700,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    "À partir de ${price.toStringAsFixed(0)} €",
+                    style: TextStyle(
+                      color: Colors.blue.shade700,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
                 ],
               ),
             ),
-            
           ],
         ),
       ),

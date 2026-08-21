@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shom_gn/consts/constants.dart';
 import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/services/assets_manager.dart';
+import 'package:shom_gn/widgets/web/tab_item.dart';
 
 
 class AppConstants {
@@ -27,6 +28,34 @@ class AppConstants {
     "Vendredi",
     "Samdei",
     "Dimanche",
+  ];
+
+  
+  static List<TabItem> menuTabs(AppLocalizations localizations) => [
+    TabItem(
+      title: localizations.category_discovery_name,
+      icon: Icons.explore,
+      routeName: '/home',
+      enabled: true,
+    ),
+    TabItem(
+      title: localizations.category_pressing_name,
+      icon: Icons.cleaning_services,
+      routeName: '/pressing',
+      enabled: true,
+    ),
+    TabItem(
+      title: localizations.category_restaurant_name,
+      icon: Icons.restaurant,
+      routeName: '/restaurant',
+      enabled: false,
+    ),
+    TabItem(
+      title: localizations.category_patisserie_name,
+      icon: Icons.store,
+      routeName: '/pastry',
+      enabled: false,
+    ),
   ];
 
   static String getMunicipality(String value) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movegui/consts/app_colors.dart';
+import 'package:shom_gn/consts/app_colors.dart';
 
 class TabButton extends StatelessWidget {
   final Widget child;
@@ -21,7 +21,7 @@ class TabButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         //: AppColors.backgroundColor,
         decoration: BoxDecoration(
-          color: selected ? AppColors.backgroundColor : Colors.grey.shade200,
+          color: selected ? AppColors.selectionColor : Colors.grey.shade200,
           borderRadius: BorderRadius.circular(20),
         ),
         child: DefaultTextStyle(

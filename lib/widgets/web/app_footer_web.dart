@@ -3,7 +3,6 @@ import 'package:shom_gn/l10n/app_localizations.dart';
 import 'package:shom_gn/services/config_service.dart';
 import 'package:shom_gn/widgets/title_text.dart';
 
-
 class AppFooterWeb extends StatelessWidget {
   const AppFooterWeb({super.key});
 
@@ -13,16 +12,154 @@ class AppFooterWeb extends StatelessWidget {
       future: loadFooterConfig(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-      return CircularProgressIndicator();
-    }
+          return CircularProgressIndicator();
+        }
 
-    final footerObj = snapshot.data!;
+        final footerObj = snapshot.data!;
         return BottomAppBar(
-          height: 100,
+          height: 180,
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           color: Theme.of(context).primaryColor,
           child: Padding(
             padding: const EdgeInsets.all(0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "SHOM-GN",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      SizedBox(height: 10),
+
+                      Text(
+                        "Voyagez facilement partout dans le monde.",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Expanded(
+                  child: Column(
+                    children: const [
+                      Text(
+                        "Contact",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+
+                      SizedBox(height: 10),
+
+                      Text(
+                        "+224 620 84 18 82",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+
+                      Text(
+                        "info@shomgn.com",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Expanded(
+                  child: Column(
+                    children: [
+                      const Text("Social"),
+                      const SizedBox(height: 10),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 10,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.facebook, size: 48),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.tiktok, size: 48),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.one_x_mobiledata, size: 48),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                /*
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Social",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.facebook, size: 36),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.tiktok, size: 36),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.one_x_mobiledata, size: 36),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                */
+
+                /*
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Social",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.facebook),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.tiktok),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.one_x_mobiledata),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                */
+              ],
+            ),
+
+            /*
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
@@ -44,6 +181,7 @@ class AppFooterWeb extends StatelessWidget {
                     ],
                   ),
                 ),
+                
                 SizedBox(
                   width: 140,
                   child: Column(
@@ -84,14 +222,74 @@ class AppFooterWeb extends StatelessWidget {
                 ),
               ],
             ),
+            */
           ),
         );
-      }
+      },
     );
   }
-
-  
 }
+
+
+/*
+
+    return Container(
+      color: AppColors.primary,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  "SHOM-GN",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                SizedBox(height: 10),
+
+                Text(
+                  "Voyagez facilement partout dans le monde.",
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ],
+            ),
+          ),
+
+          Expanded(
+            child: Column(
+              children: const [
+                Text(
+                  "Contact",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+
+                SizedBox(height: 10),
+
+                Text(
+                  "+224 620 84 18 82",
+                  style: TextStyle(color: Colors.white70),
+                ),
+
+                Text(
+                  "info@shomgn.com",
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    */
 
 
 /*
